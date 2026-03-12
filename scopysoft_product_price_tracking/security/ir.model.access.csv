@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_product_price_tracking_user,product.price.tracking.user,model_product_price_tracking,stock.group_stock_user,1,0,0,0
+access_product_price_tracking_manager,product.price.tracking.manager,model_product_price_tracking,stock.group_stock_manager,1,1,0,1
+access_product_price_tracking_system,product.price.tracking.system,model_product_price_tracking,base.group_system,1,1,1,1
+access_product_price_tracking_sale_user,product.price.tracking.sale.user,model_product_price_tracking,sales_team.group_sale_salesman,1,0,0,0
+access_product_price_tracking_sale_manager,product.price.tracking.sale.manager,model_product_price_tracking,sales_team.group_sale_manager,1,1,0,1
