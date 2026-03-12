@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- List View -->
+    <record id="view_vendor_price_history_list" model="ir.ui.view">
+        <field name="name">vendor.price.history.list</field>
+        <field name="model">vendor.price.history</field>
+        <field name="arch" type="xml">
+            <tree string="Vendor Price History" decoration-danger="price_difference &lt; 0" decoration-success="price_difference &gt; 0">
+                <field name="currency_id" invisible="1"/>
+                <field name="create_date" string="Date"/>
+                <field name="product_tmpl_id" string="Product"/>
+                <field name="partner_id" string="Vendor"/>
+                <field name="user_id" string="User"/>
+                <field name="old_price" string="Old Price" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                <field name="new_price" string="New Price" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                <field name="price_difference" string="Difference" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                <field name="price_difference_percent" string="Difference (%)"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_vendor_price_history_form" model="ir.ui.view">
+        <field name="name">vendor.price.history.form</field>
+        <field name="model">vendor.price.history</field>
+        <field name="arch" type="xml">
+            <form string="Vendor Price History">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="product_tmpl_id"/>
+                            <field name="partner_id"/>
+                            <field name="user_id"/>
+                            <field name="company_id"/>
+                        </group>
+                        <group>
+                            <field name="currency_id" invisible="1"/>
+                            <field name="old_price" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                            <field name="new_price" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                            <field name="price_difference" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                            <field name="price_difference_percent"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="notes" placeholder="Optional notes..."/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Search View -->
+    <record id="view_vendor_price_history_search" model="ir.ui.view">
+        <field name="name">vendor.price.history.search</field>
+        <field name="model">vendor.price.history</field>
+        <field name="arch" type="xml">
+            <search string="Vendor Price History">
+                <field name="product_tmpl_id"/>
+                <field name="partner_id"/>
+                <field name="user_id"/>
+                <filter string="Price Increased" name="increased" domain="[('price_difference', '&gt;', 0)]"/>
+                <filter string="Price Decreased" name="decreased" domain="[('price_difference', '&lt;', 0)]"/>
+                <separator/>
+                <filter string="Today" name="today" domain="[('create_date', '&gt;=', datetime.datetime.now().strftime('%Y-%m-%d 00:00:00'))]"/>
+                <filter string="This Month" name="this_month" domain="[('create_date', '&gt;=', (context_today() + relativedelta(day=1)).strftime('%Y-%m-%d'))]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Product" name="group_product" context="{'group_by': 'product_tmpl_id'}"/>
+                    <filter string="Vendor" name="group_vendor" context="{'group_by': 'partner_id'}"/>
+                    <filter string="User" name="group_user" context="{'group_by': 'user_id'}"/>
+                    <filter string="Date" name="group_date" context="{'group_by': 'create_date:month'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_vendor_price_history" model="ir.actions.act_window">
+        <field name="name">Vendor Price History</field>
+        <field name="res_model">vendor.price.history</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_vendor_price_history_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No vendor price changes recorded yet!
+            </p>
+            <p>
+                Vendor price changes will appear here automatically whenever
+                a vendor price is updated on a product.
+            </p>
+        </field>
+    </record>
+
+    <!-- Menu -->
+    <menuitem id="menu_vendor_price_history"
+              name="Vendor Price History"
+              parent="purchase.menu_purchase_config"
+              action="action_vendor_price_history"
+              sequence="20"/>
+
+</odoo>
