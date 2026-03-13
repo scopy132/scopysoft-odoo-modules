@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Customer Statement – ScopySoft</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet"/>
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --navy:   #1a1a2e;
+            --navy2:  #16213e;
+            --teal:   #0f7ea8;
+            --teal-lt:#e6f4f9;
+            --white:  #ffffff;
+            --off:    #f7f8fc;
+            --text:   #2d2d3a;
+            --muted:  #6b7280;
+            --border: #e2e5ec;
+            --green:  #198754;
+            --red:    #dc3545;
+            --amber:  #f59e0b;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            color: var(--text);
+            background: var(--white);
+            line-height: 1.65;
+            font-size: 15px;
+        }
+
+        /* HERO */
+        .hero {
+            background: var(--navy);
+            color: var(--white);
+            padding: 64px 52px 60px;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -100px; right: -100px;
+            width: 400px; height: 400px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(15,126,168,0.22) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        .hero-eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(15,126,168,0.2);
+            border: 1px solid rgba(15,126,168,0.4);
+            border-radius: 20px;
+            padding: 5px 16px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: #7ecfe8;
+            margin-bottom: 24px;
+        }
+        .hero h1 {
+            font-family: 'DM Serif Display', serif;
+            font-size: 44px;
+            line-height: 1.12;
+            max-width: 620px;
+            margin-bottom: 20px;
+        }
+        .hero h1 span { color: #7ecfe8; }
+        .hero-sub {
+            font-size: 16px;
+            color: rgba(255,255,255,0.68);
+            max-width: 540px;
+            margin-bottom: 36px;
+            font-weight: 300;
+            line-height: 1.7;
+        }
+        .hero-tags { display: flex; flex-wrap: wrap; gap: 10px; }
+        .hero-tag {
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.14);
+            border-radius: 6px;
+            padding: 6px 14px;
+            font-size: 12px;
+            font-weight: 500;
+            color: rgba(255,255,255,0.82);
+        }
+
+        /* SECTION BASE */
+        section { padding: 60px 52px; }
+        section:nth-child(even) { background: var(--off); }
+        .section-label {
+            font-size: 11px; font-weight: 700; letter-spacing: 0.12em;
+            text-transform: uppercase; color: var(--teal); margin-bottom: 10px;
+        }
+        .section-title {
+            font-family: 'DM Serif Display', serif;
+            font-size: 32px; color: var(--navy); margin-bottom: 14px; line-height: 1.2;
+        }
+        .section-intro {
+            font-size: 15px; color: var(--muted); max-width: 620px;
+            margin-bottom: 44px; line-height: 1.7;
+        }
+
+        /* WHERE TO FIND IT */
+        .find-box {
+            background: var(--navy); border-radius: 12px;
+            padding: 30px 36px; margin-bottom: 44px;
+            display: flex; gap: 22px; align-items: flex-start;
+        }
+        .find-box-icon {
+            flex-shrink: 0; width: 48px; height: 48px;
+            background: rgba(15,126,168,0.28); border-radius: 10px;
+            display: flex; align-items: center; justify-content: center; font-size: 22px;
+        }
+        .find-box h4 {
+            font-size: 11px; font-weight: 700; letter-spacing: 0.1em;
+            text-transform: uppercase; color: #7ecfe8; margin-bottom: 12px;
+        }
+        .path { display: flex; flex-wrap: wrap; align-items: center; gap: 7px; font-size: 13px; color: rgba(255,255,255,0.88); }
+        .path-step {
+            background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.18);
+            border-radius: 5px; padding: 4px 12px; font-weight: 500;
+        }
+        .path-arrow { color: rgba(255,255,255,0.35); }
+        .find-note { margin-top: 12px; font-size: 12px; color: rgba(255,255,255,0.5); line-height: 1.6; }
+
+        /* STEPS */
+        .steps { position: relative; }
+        .steps::before {
+            content: ''; position: absolute;
+            left: 19px; top: 28px; bottom: 28px;
+            width: 2px; background: var(--border);
+        }
+        .step { display: flex; gap: 22px; padding: 18px 0; position: relative; z-index: 1; }
+        .step-num {
+            flex-shrink: 0; width: 40px; height: 40px;
+            background: var(--navy); color: white; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 15px; font-weight: 700; font-family: 'DM Serif Display', serif;
+        }
+        .step h4 { font-size: 14px; font-weight: 600; color: var(--navy); margin-bottom: 5px; }
+        .step p  { font-size: 13px; color: var(--muted); line-height: 1.6; }
+
+        /* FEATURE GRID */
+        .feature-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(265px, 1fr)); gap: 20px; }
+        .feature-card {
+            background: var(--white); border: 1px solid var(--border);
+            border-radius: 10px; padding: 26px 24px; transition: box-shadow 0.2s;
+        }
+        .feature-card:hover { box-shadow: 0 6px 22px rgba(26,26,46,0.09); }
+        .feature-icon {
+            width: 42px; height: 42px; background: var(--teal-lt); border-radius: 9px;
+            display: flex; align-items: center; justify-content: center; font-size: 19px; margin-bottom: 16px;
+        }
+        .feature-card h3 { font-size: 14px; font-weight: 600; color: var(--navy); margin-bottom: 8px; }
+        .feature-card p  { font-size: 13px; color: var(--muted); line-height: 1.6; }
+
+        /* FILTER CARDS */
+        .filter-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+        .filter-card { border-radius: 10px; padding: 24px 22px; border: 1px solid var(--border); }
+        .filter-card.all    { background: #f0f9ff; border-color: #bae0f5; }
+        .filter-card.unpaid { background: #fff8ed; border-color: #fcd5a0; }
+        .filter-card.paid   { background: #f0fdf4; border-color: #a7f3c0; }
+        .filter-badge {
+            display: inline-block; border-radius: 20px; padding: 4px 14px;
+            font-size: 11px; font-weight: 700; letter-spacing: 0.06em;
+            text-transform: uppercase; margin-bottom: 14px;
+        }
+        .filter-card.all    .filter-badge { background: var(--teal);  color: white; }
+        .filter-card.unpaid .filter-badge { background: var(--amber); color: white; }
+        .filter-card.paid   .filter-badge { background: var(--green); color: white; }
+        .filter-card h4 { font-size: 14px; font-weight: 600; color: var(--navy); margin-bottom: 8px; }
+        .filter-card p  { font-size: 13px; color: var(--muted); line-height: 1.55; }
+
+        /* SCREENSHOTS */
+        .screenshot-block { margin-bottom: 52px; }
+        .screenshot-block:last-child { margin-bottom: 0; }
+        .ss-label {
+            display: inline-flex; align-items: center; gap: 7px;
+            font-size: 11px; font-weight: 700; letter-spacing: 0.1em;
+            text-transform: uppercase; color: var(--teal); margin-bottom: 10px;
+        }
+        .screenshot-block h3 { font-size: 20px; font-weight: 600; color: var(--navy); margin-bottom: 8px; }
+        .screenshot-block p  { font-size: 14px; color: var(--muted); max-width: 580px; margin-bottom: 20px; line-height: 1.65; }
+        .ss-frame {
+            border-radius: 10px; overflow: hidden;
+            border: 1px solid var(--border); box-shadow: 0 8px 36px rgba(26,26,46,0.1);
+        }
+        .ss-frame img { width: 100%; display: block; }
+        .info-callout {
+            display: flex; gap: 16px; background: #fffbeb;
+            border: 1px solid #fcd34d; border-radius: 10px;
+            padding: 18px 22px; margin-top: 36px;
+        }
+        .info-callout p { font-size: 13px; color: #92400e; line-height: 1.6; }
+        .info-callout strong { color: #78350f; }
+
+        /* FAQ */
+        .faq-list { display: flex; flex-direction: column; gap: 0; }
+        .faq-item { border-bottom: 1px solid var(--border); padding: 32px 0; }
+        .faq-item:first-child { border-top: 1px solid var(--border); }
+        .faq-q {
+            font-size: 16px; font-weight: 600; color: var(--navy);
+            margin-bottom: 14px; display: flex; align-items: flex-start; gap: 14px; line-height: 1.4;
+        }
+        .faq-q-icon {
+            flex-shrink: 0; width: 28px; height: 28px;
+            background: var(--teal-lt); border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 13px; font-weight: 700; color: var(--teal); margin-top: 1px;
+        }
+        .faq-a { font-size: 14px; color: var(--muted); line-height: 1.75; padding-left: 42px; }
+        .faq-a ul { margin: 10px 0 0 18px; }
+        .faq-a ul li { margin-bottom: 6px; }
+
+        /* CTA */
+        .cta { background: var(--navy2); color: var(--white); text-align: center; padding: 64px 52px; }
+        .cta h2 { font-family: 'DM Serif Display', serif; font-size: 32px; margin-bottom: 14px; }
+        .cta p { font-size: 15px; color: rgba(255,255,255,0.6); margin-bottom: 32px; line-height: 1.7; }
+        .cta-btn {
+            display: inline-flex; align-items: center; gap: 10px;
+            background: var(--teal); color: white; border-radius: 8px;
+            padding: 14px 32px; font-size: 16px; font-weight: 600; margin-bottom: 20px;
+        }
+        .cta-meta { font-size: 12px; color: rgba(255,255,255,0.38); }
+        .cta-meta span { margin: 0 8px; }
+
+        /* BRAND FOOTER */
+        .brand-footer {
+            background: var(--navy); padding: 22px 52px;
+            display: flex; align-items: center; justify-content: space-between;
+        }
+        .brand-name { font-family: 'DM Serif Display', serif; font-size: 19px; color: var(--white); }
+        .brand-name span { color: #7ecfe8; }
+        .brand-tagline { font-size: 11px; color: rgba(255,255,255,0.38); margin-top: 3px; }
+        .brand-right { font-size: 12px; color: rgba(255,255,255,0.32); text-align: right; }
+
+        @media (max-width: 700px) {
+            .hero, section, .cta, .brand-footer { padding-left: 24px; padding-right: 24px; }
+            .hero h1 { font-size: 30px; }
+            .filter-row { grid-template-columns: 1fr; }
+            .feature-grid { grid-template-columns: 1fr; }
+            .brand-footer { flex-direction: column; gap: 12px; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+    <div class="hero-eyebrow">⚡ ScopySoft · Odoo 17.0</div>
+    <h1>Customer <span>Account Statements</span> in One Click</h1>
+    <p class="hero-sub">
+        Generate professional PDF account statements directly from any customer record.
+        Filter by payment status, set a date range, and download instantly — no configuration needed.
+    </p>
+    <div class="hero-tags">
+        <span class="hero-tag">📄 PDF Generation</span>
+        <span class="hero-tag">🔍 3 Filter Modes</span>
+        <span class="hero-tag">📅 Date Range Selector</span>
+        <span class="hero-tag">💳 Invoicing App</span>
+        <span class="hero-tag">🏢 Multi-Company Ready</span>
+        <span class="hero-tag">OPL-1 License</span>
+    </div>
+</div>
+
+
+<!-- WHERE TO FIND IT -->
+<section>
+    <div class="section-label">Getting Started</div>
+    <div class="section-title">Where to Find the Button</div>
+    <p class="section-intro">
+        After installing, the <strong>Generate Statement</strong> option appears automatically on every customer record inside the Invoicing app — accessible from the <strong>More</strong> dropdown in the top action bar.
+    </p>
+
+    <div class="find-box">
+        <div class="find-box-icon">🗺️</div>
+        <div>
+            <h4>Navigation Path</h4>
+            <div class="path">
+                <span class="path-step">Invoicing</span>
+                <span class="path-arrow">→</span>
+                <span class="path-step">Customers</span>
+                <span class="path-arrow">→</span>
+                <span class="path-step">Remove "Customer Invoices" filter</span>
+                <span class="path-arrow">→</span>
+                <span class="path-step">Open any Customer</span>
+                <span class="path-arrow">→</span>
+                <span class="path-step">More ▾</span>
+                <span class="path-arrow">→</span>
+                <span class="path-step">Generate Statement</span>
+            </div>
+            <div class="find-note">
+                💡 Tip: Odoo's default customer list shows a filtered view. Remove the "Customer Invoices" filter from the search bar to see all contacts, then open any customer. The button lives inside the More dropdown at the top of the form.
+            </div>
+        </div>
+    </div>
+
+    <div class="steps">
+        <div class="step">
+            <div class="step-num">1</div>
+            <div>
+                <h4>Open a Customer Record</h4>
+                <p>Go to Invoicing → Customers, remove the default filter, and open any customer.</p>
+            </div>
+        </div>
+        <div class="step">
+            <div class="step-num">2</div>
+            <div>
+                <h4>Click More → Generate Statement</h4>
+                <p>Find the Generate Statement option inside the More dropdown at the top of the customer form.</p>
+            </div>
+        </div>
+        <div class="step">
+            <div class="step-num">3</div>
+            <div>
+                <h4>Set Your Filters &amp; Date Range</h4>
+                <p>Choose a filter mode (All / Unpaid / Paid) and adjust the date range in the popup wizard.</p>
+            </div>
+        </div>
+        <div class="step">
+            <div class="step-num">4</div>
+            <div>
+                <h4>Print / Download PDF</h4>
+                <p>Click the button and the statement opens instantly as a PDF — ready to save or share.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- FEATURES -->
+<section>
+    <div class="section-label">Features</div>
+    <div class="section-title">Everything You Need, Nothing You Don't</div>
+    <p class="section-intro">Designed to be fast, clean, and immediately useful right after install — no setup, no configuration.</p>
+
+    <div class="feature-grid">
+        <div class="feature-card">
+            <div class="feature-icon">⚡</div>
+            <h3>One-Click Statement</h3>
+            <p>The Generate Statement option in the More menu launches the wizard directly from the customer record.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">🔍</div>
+            <h3>3 Smart Filters</h3>
+            <p>Show All Invoices &amp; Payments, Unpaid/Partially Paid Only, or Paid Invoices Only — pick the view that fits.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">📅</div>
+            <h3>Flexible Date Range</h3>
+            <p>Choose from presets like Last Month, Last 3 Months, or This Year — or set a fully custom From/To date range.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">📊</div>
+            <h3>Running Balance</h3>
+            <p>Every line shows a running balance alongside Debit and Credit columns so customers can trace how their balance changed.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">🏷️</div>
+            <h3>Clear Status Badges</h3>
+            <p>Each transaction is labelled Paid, Unpaid, Partial, or Payment with colour-coded badges for instant readability.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">🏢</div>
+            <h3>Multi-Company Support</h3>
+            <p>Each statement pulls the correct company name and email — safe to use in multi-company setups without extra config.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">💰</div>
+            <h3>Summary Totals</h3>
+            <p>Total Invoiced, Total Paid, and Balance Due are prominently displayed at the top of every statement.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">🧾</div>
+            <h3>Customer Details Block</h3>
+            <p>Name, email, phone, and address are pulled automatically from the customer record — no manual data entry.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">📥</div>
+            <h3>Instant PDF Download</h3>
+            <p>The statement generates as a clean, print-ready PDF that opens directly in your browser — ready to download or print.</p>
+        </div>
+    </div>
+</section>
+
+
+<!-- FILTER MODES -->
+<section>
+    <div class="section-label">Filter Modes</div>
+    <div class="section-title">The Right View for Every Situation</div>
+    <p class="section-intro">Choose exactly what appears on the statement with a single radio button selection in the wizard.</p>
+
+    <div class="filter-row">
+        <div class="filter-card all">
+            <div class="filter-badge">All</div>
+            <h4>All Invoices &amp; Payments</h4>
+            <p>Shows every invoice and every payment in the date range — ideal for a complete account history or end-of-period reconciliation.</p>
+        </div>
+        <div class="filter-card unpaid">
+            <div class="filter-badge">Unpaid</div>
+            <h4>Unpaid / Partially Paid Only</h4>
+            <p>Shows only open and partially settled invoices along with their payments — perfect for chasing outstanding balances.</p>
+        </div>
+        <div class="filter-card paid">
+            <div class="filter-badge">Paid</div>
+            <h4>Paid Invoices Only</h4>
+            <p>Shows only fully settled invoices and their corresponding payments — useful for proof-of-payment summaries or year-end records.</p>
+        </div>
+    </div>
+</section>
+
+
+<!-- SCREENSHOTS -->
+<section>
+    <div class="section-label">Screenshots</div>
+    <div class="section-title">See It in Action</div>
+
+    <div class="screenshot-block">
+        <div class="ss-label">📍 Step 1 — Finding the Button</div>
+        <h3>Generate Statement in the More Dropdown</h3>
+        <p>After install, the Generate Statement option appears inside the More dropdown at the top of every customer form in the Invoicing app. No setup needed — it's there immediately.</p>
+        <div class="ss-frame">
+            <img src="screenshot_button.png" alt="Generate Statement in More dropdown"/>
+        </div>
+    </div>
+
+    <div class="screenshot-block">
+        <div class="ss-label">📋 Step 2 — The Wizard Popup</div>
+        <h3>Clean, Simple Generate Statement Dialog</h3>
+        <p>Choose your filter mode and date range, then hit Print / Download PDF. The customer and company are pre-filled automatically from the record you opened.</p>
+        <div class="ss-frame">
+            <img src="screenshot_wizard.png" alt="Generate Statement wizard popup"/>
+        </div>
+    </div>
+
+    <div class="screenshot-block">
+        <div class="ss-label">📄 Step 3 — PDF Output</div>
+        <h3>Professional Account Statement PDF</h3>
+        <p>Clean layout with customer details, summary totals (Total Invoiced, Total Paid, Balance Due), and a full transaction table with running balance. Ready to share immediately.</p>
+        <div class="ss-frame">
+            <img src="screenshot_pdf.png" alt="Account statement PDF output"/>
+        </div>
+    </div>
+
+    <div class="info-callout">
+        <div style="font-size:20px; flex-shrink:0; margin-top:1px;">💡</div>
+        <p>
+            <strong>Date filtering uses Invoice Date.</strong> The date range matches invoices by their invoice date and payments by the date they were registered. Make sure your invoices are dated correctly for the statement to include them in the expected period.
+        </p>
+    </div>
+</section>
+
+
+<!-- FAQ -->
+<section>
+    <div class="section-label">FAQ</div>
+    <div class="section-title">Frequently Asked Questions</div>
+
+    <div class="faq-list">
+
+        <div class="faq-item">
+            <div class="faq-q">
+                <div class="faq-q-icon">Q</div>
+                Where does the Generate Statement option appear?
+            </div>
+            <div class="faq-a">
+                It appears inside the <strong>More</strong> dropdown at the top of the customer form in the Invoicing app. To reach it: go to <strong>Invoicing → Customers</strong>, remove the default "Customer Invoices" filter from the search bar, open any customer record, then click <strong>More ▾ → Generate Statement</strong>.
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-q">
+                <div class="faq-q-icon">Q</div>
+                Does it work without creating a new invoice first?
+            </div>
+            <div class="faq-a">
+                Yes. The module reads existing invoices and payments already in your database. As long as a customer has posted invoices, you can generate a statement straight away — no need to create any new records first.
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-q">
+                <div class="faq-q-icon">Q</div>
+                What does the Date Range filter on?
+            </div>
+            <div class="faq-a">
+                The date range filters on <strong>Invoice Date</strong> for invoices, and on the <strong>payment registration date</strong> for payments. Make sure your invoices are dated within the selected range for them to appear on the statement.
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-q">
+                <div class="faq-q-icon">Q</div>
+                Which Odoo apps does this module require?
+            </div>
+            <div class="faq-a">
+                Only the <strong>Invoicing (account)</strong> app. No Sales, CRM, or any other app is required.
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-q">
+                <div class="faq-q-icon">Q</div>
+                What are the three filter options?
+            </div>
+            <div class="faq-a">
+                <ul>
+                    <li><strong>All Invoices &amp; Payments</strong> — full account history within the selected date range</li>
+                    <li><strong>Unpaid / Partially Paid Only</strong> — open and partially settled invoices plus their payments</li>
+                    <li><strong>Paid Invoices Only</strong> — fully settled invoices and their corresponding payments</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-q">
+                <div class="faq-q-icon">Q</div>
+                Who can access the Generate Statement option?
+            </div>
+            <div class="faq-a">
+                Any internal Odoo user can use it. No special accounting group is required — if a user can open a customer record in the Invoicing app, they can generate a statement.
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-q">
+                <div class="faq-q-icon">Q</div>
+                Does it work with multiple companies?
+            </div>
+            <div class="faq-a">
+                Yes. The statement always uses the company linked to the current user session, so it is fully safe to use in multi-company Odoo setups without any additional configuration.
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-q">
+                <div class="faq-q-icon">Q</div>
+                Can I send the statement by email directly from the wizard?
+            </div>
+            <div class="faq-a">
+                The current version generates the statement as a downloadable PDF only. Once downloaded, you can attach it to any email from your mail client.
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-q">
+                <div class="faq-q-icon">Q</div>
+                Is this compatible with Odoo 17 Community and Enterprise?
+            </div>
+            <div class="faq-a">
+                Yes. The module is built and tested on Odoo 17.0 and works on both Community and Enterprise editions.
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-q">
+                <div class="faq-q-icon">Q</div>
+                How do I get support?
+            </div>
+            <div class="faq-a">
+                Reach out via the support email listed on the module page. We aim to respond within 1–2 business days.
+            </div>
+        </div>
+
+    </div>
+</section>
+
+
+<!-- CTA -->
+<div class="cta">
+    <h2>Ready to Stop Doing This Manually?</h2>
+    <p>One click. Any customer. Any date range. Professional PDF — every time.</p>
+    <div class="cta-btn">📄 Get Customer Statement — $20</div>
+    <div class="cta-meta">
+        OPL-1 License <span>·</span> Odoo 17.0 <span>·</span> One-time purchase <span>·</span> ScopySoft
+    </div>
+</div>
+
+
+<!-- BRAND FOOTER -->
+<div class="brand-footer">
+    <div>
+        <div class="brand-name">Scopy<span>Soft</span></div>
+        <div class="brand-tagline">Practical Odoo modules that just work.</div>
+    </div>
+    <div class="brand-right">
+        Built with care for Odoo businesses worldwide.<br/>
+        © 2026 ScopySoft
+    </div>
+</div>
+
+</body>
+</html>

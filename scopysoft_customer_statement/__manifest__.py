@@ -1,0 +1,26 @@
+# -*- coding: utf-8 -*-
+{
+    'name': 'Customer Statement',
+    'version': '17.0.1.0.0',
+    'category': 'Accounting',
+    'summary': 'Generate professional customer account statements in one click.',
+    'author': 'ScopySoft',
+    'support': 'opeyemiajetunmobi9@gmail.com',
+    'website': '',
+    'depends': ['account'],
+    'data': [
+        'security/ir.model.access.csv',
+        'wizard/statement_wizard_views.xml',
+        'report/paperformat.xml',
+        'report/statement_report.xml',
+        'report/statement_template.xml',
+        'views/partner_views.xml',
+    ],
+    'images': ['static/description/banner.png'],
+    'price': 20.00,
+    'currency': 'USD',
+    'installable': True,
+    'application': False,
+    'auto_install': False,
+    'license': 'OPL-1',
+}

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="action_report_customer_statement" model="ir.actions.report">
+        <field name="name">Customer Statement</field>
+        <field name="model">customer.statement.wizard</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">scopysoft_customer_statement.report_customer_statement_template</field>
+        <field name="report_file">scopysoft_customer_statement.report_customer_statement_template</field>
+        <field name="print_report_name">'Statement - %s' % object.partner_id.name</field>
+        <field name="paperformat_id" ref="scopysoft_customer_statement.paperformat_customer_statement"/>
+    </record>
+
+</odoo>
