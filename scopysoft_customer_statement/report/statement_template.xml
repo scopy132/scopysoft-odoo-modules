@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<template id="report_customer_statement_template">
+    <t t-call="web.html_container">
+        <t t-foreach="docs" t-as="wizard">
+            <t t-set="data" t-value="wizard.get_statement_data()"/>
+            <t t-call="web.external_layout">
+                <div class="page">
+                    <style>
+                        .statement-header { margin-bottom: 24px; }
+                        .statement-title { font-size: 22px; font-weight: bold; color: #1a1a2e; margin-bottom: 4px; }
+                        .statement-meta { font-size: 12px; color: #666; margin-bottom: 2px; }
+                        .customer-box { background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 6px; padding: 14px 18px; margin-bottom: 20px; }
+                        .customer-name { font-size: 15px; font-weight: bold; color: #1a1a2e; }
+                        .customer-detail { font-size: 12px; color: #555; margin-top: 2px; }
+                        table.statement-table { width: 100%; border-collapse: collapse; font-size: 12px; margin-bottom: 20px; }
+                        table.statement-table thead tr { background: #1a1a2e; color: white; }
+                        table.statement-table thead th { padding: 10px 10px; text-align: left; font-weight: 600; font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; }
+                        table.statement-table tbody tr { border-bottom: 1px solid #e9ecef; }
+                        table.statement-table tbody tr:nth-child(even) { background: #f8f9fa; }
+                        table.statement-table tbody td { padding: 9px 10px; vertical-align: middle; }
+                        .text-right { text-align: right; }
+                        .text-center { text-align: center; }
+                        .badge-unpaid { background: #fff3cd; color: #856404; padding: 2px 8px; border-radius: 4px; font-size: 10px; font-weight: 600; }
+                        .badge-paid { background: #d1e7dd; color: #0f5132; padding: 2px 8px; border-radius: 4px; font-size: 10px; font-weight: 600; }
+                        .badge-partial { background: #cfe2ff; color: #084298; padding: 2px 8px; border-radius: 4px; font-size: 10px; font-weight: 600; }
+                        .badge-payment { background: #d1e7dd; color: #0f5132; padding: 2px 8px; border-radius: 4px; font-size: 10px; font-weight: 600; }
+                        .summary-box { display: flex; gap: 16px; margin-bottom: 20px; }
+                        .summary-card { flex: 1; border: 1px solid #dee2e6; border-radius: 6px; padding: 14px; text-align: center; }
+                        .summary-card .label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: #666; margin-bottom: 4px; }
+                        .summary-card .value { font-size: 16px; font-weight: bold; color: #1a1a2e; }
+                        .summary-card.balance .value { color: #dc3545; }
+                        .summary-card.balance.zero .value { color: #198754; }
+                        .positive { color: #198754; }
+                        .negative { color: #dc3545; }
+                        .footer-note { font-size: 10px; color: #999; text-align: center; margin-top: 20px; border-top: 1px solid #e9ecef; padding-top: 12px; }
+                    </style>
+
+                    <!-- Header -->
+                    <div class="statement-header">
+                        <div class="statement-title">Account Statement</div>
+                        <div class="statement-meta">Period: <t t-esc="data['date_from']"/> to <t t-esc="data['date_to']"/></div>
+                        <div class="statement-meta">Filter: <t t-esc="data['filter_label']"/></div>
+                        <div class="statement-meta">Generated: <t t-esc="context_timestamp(datetime.datetime.now()).strftime('%d/%m/%Y %H:%M')"/></div>
+                    </div>
+
+                    <!-- Customer Info -->
+                    <div class="customer-box">
+                        <div class="customer-name"><t t-esc="data['partner'].name"/></div>
+                        <t t-if="data['partner'].email">
+                            <div class="customer-detail">Email: <t t-esc="data['partner'].email"/></div>
+                        </t>
+                        <t t-if="data['partner'].phone">
+                            <div class="customer-detail">Phone: <t t-esc="data['partner'].phone"/></div>
+                        </t>
+                        <t t-if="data['partner'].street">
+                            <div class="customer-detail"><t t-esc="data['partner'].contact_address"/></div>
+                        </t>
+                    </div>
+
+                    <!-- Summary Cards -->
+                    <div class="summary-box">
+                        <div class="summary-card">
+                            <div class="label">Total Invoiced</div>
+                            <div class="value">
+                                <t t-esc="data['currency'].symbol"/>
+                                <t t-esc="'{:,.2f}'.format(data['total_invoiced'])"/>
+                            </div>
+                        </div>
+                        <div class="summary-card">
+                            <div class="label">Total Paid</div>
+                            <div class="value positive">
+                                <t t-esc="data['currency'].symbol"/>
+                                <t t-esc="'{:,.2f}'.format(data['total_paid'])"/>
+                            </div>
+                        </div>
+                        <div t-attf-class="summary-card balance #{data['closing_balance'] == 0 and 'zero' or ''}">
+                            <div class="label">Balance Due</div>
+                            <div class="value">
+                                <t t-esc="data['currency'].symbol"/>
+                                <t t-esc="'{:,.2f}'.format(data['closing_balance'])"/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Statement Lines Table -->
+                    <table class="statement-table">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Reference</th>
+                                <th>Description</th>
+                                <th>Type</th>
+                                <th class="text-right">Debit</th>
+                                <th class="text-right">Credit</th>
+                                <th class="text-right">Balance</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="data['lines']" t-as="line">
+                                <tr>
+                                    <td><t t-esc="line['date']"/></td>
+                                    <td><t t-esc="line['ref']"/></td>
+                                    <td><t t-esc="line['description'] or ''"/></td>
+                                    <td>
+                                        <t t-if="line['type'] == 'payment'">
+                                            <span class="badge-payment">Payment</span>
+                                        </t>
+                                        <t t-elif="line['payment_state'] == 'paid'">
+                                            <span class="badge-paid">Paid</span>
+                                        </t>
+                                        <t t-elif="line['payment_state'] == 'partial'">
+                                            <span class="badge-partial">Partial</span>
+                                        </t>
+                                        <t t-else="">
+                                            <span class="badge-unpaid">Unpaid</span>
+                                        </t>
+                                    </td>
+                                    <td class="text-right">
+                                        <t t-if="line['amount_total'] > 0">
+                                            <t t-esc="'{:,.2f}'.format(line['amount_total'])"/>
+                                        </t>
+                                        <t t-else="">—</t>
+                                    </td>
+                                    <td class="text-right positive">
+                                        <t t-if="line['amount_total'] &lt; 0">
+                                            <t t-esc="'{:,.2f}'.format(abs(line['amount_total']))"/>
+                                        </t>
+                                        <t t-else="">—</t>
+                                    </td>
+                                    <td t-attf-class="text-right #{line['balance'] > 0 and 'negative' or 'positive'}">
+                                        <t t-esc="'{:,.2f}'.format(line['balance'])"/>
+                                    </td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+
+                    <div class="footer-note">
+                        This statement was generated automatically by <t t-esc="data['company'].name"/>.
+                        For queries, please contact us at <t t-esc="data['company'].email or ''"/>.
+                    </div>
+                </div>
+            </t>
+        </t>
+    </t>
+</template>
+</odoo>
