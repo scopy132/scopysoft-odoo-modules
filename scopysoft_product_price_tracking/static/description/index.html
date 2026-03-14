@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Product Price Tracking</title>
+<style>
+  body { font-family: Arial, sans-serif; color: #333; margin: 0; padding: 0; background: #fff; }
+  .header { background: #0A0F1E; padding: 40px; text-align: center; }
+  .header img { max-width: 100%; border-radius: 8px; }
+  .section { padding: 40px; max-width: 900px; margin: 0 auto; }
+  .section h2 { color: #0A0F1E; border-bottom: 3px solid #F59E0B; padding-bottom: 8px; }
+  .features-table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+  .features-table td { padding: 12px 16px; border-bottom: 1px solid #eee; vertical-align: top; }
+  .features-table td:first-child { width: 30px; color: #F59E0B; font-size: 18px; font-weight: bold; }
+  .screenshot { width: 100%; border-radius: 8px; border: 1px solid #e0e0e0; margin: 16px 0; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+  .badge { display: inline-block; background: #F59E0B; color: #fff; padding: 4px 12px; border-radius: 20px; font-size: 13px; margin: 4px; }
+  .badge-green { background: #10B981; }
+  .highlight-box { background: #FFF8E7; border-left: 4px solid #F59E0B; padding: 16px 20px; margin: 20px 0; border-radius: 0 8px 8px 0; }
+  .origins-table { width: 100%; border-collapse: collapse; margin: 16px 0; }
+  .origins-table th { background: #0A0F1E; color: #F59E0B; padding: 10px 14px; text-align: left; }
+  .origins-table td { padding: 10px 14px; border-bottom: 1px solid #eee; }
+  .origins-table tr:nth-child(even) { background: #f9f9f9; }
+  .faq-item { margin: 28px 0; }
+  .faq-item h3 { color: #0A0F1E; font-size: 20px; margin-bottom: 8px; }
+  .faq-item p { margin: 0; color: #555; line-height: 1.65; }
+  .footer { background: #0A0F1E; color: #aaa; text-align: center; padding: 24px; font-size: 13px; }
+  .two-col { display: table; width: 100%; }
+  .col { display: table-cell; width: 50%; padding: 0 10px; vertical-align: top; }
+  .col:first-child { padding-left: 0; }
+  .col:last-child { padding-right: 0; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <img src="banner.png" alt="Product Price Tracking by ScopySoft"/>
+</div>
+
+<div class="section">
+  <h2>Overview</h2>
+  <p>
+    <strong>Product Price Tracking</strong> gives you a complete audit trail of every change made to your product's sales price.
+    Know exactly who changed it, when it was changed, and where the change came from — automatically, with zero configuration.
+  </p>
+  <div class="highlight-box">
+    Ever opened a product and found the sales price different from what you set — but had no idea who changed it or why?
+    This module solves that permanently.
+  </div>
+
+  <span class="badge">Odoo 16.0</span>
+  <span class="badge">OPL-1 License</span>
+  <span class="badge badge-green">Works on Odoo.sh</span>
+  <span class="badge badge-green">Works On-Premise</span>
+</div>
+
+<div class="section">
+  <h2>Key Features</h2>
+  <table class="features-table">
+    <tr><td>✓</td><td><strong>Automatic tracking</strong> — Every sales price change is recorded instantly. Nothing to configure, nothing to enable.</td></tr>
+    <tr><td>✓</td><td><strong>Old &amp; New Price</strong> — See exactly what the price was before and after each change.</td></tr>
+    <tr><td>✓</td><td><strong>Difference &amp; % Change</strong> — Quickly see how much the price changed in value and percentage.</td></tr>
+    <tr><td>✓</td><td><strong>User tracking</strong> — Know exactly which user made each change.</td></tr>
+    <tr><td>✓</td><td><strong>Origin detection</strong> — Automatically detects whether the change was Manual, Import, Scheduled Action, and more.</td></tr>
+    <tr><td>✓</td><td><strong>Smart button</strong> — Price change count visible directly on the product form.</td></tr>
+    <tr><td>✓</td><td><strong>Price History tab</strong> — Inline history visible on the product form itself.</td></tr>
+    <tr><td>✓</td><td><strong>Filter &amp; Group By</strong> — Filter by origin, user, date. Group by product, origin, user, company.</td></tr>
+    <tr><td>✓</td><td><strong>Export</strong> — Export all tracking records to Excel/CSV for reporting.</td></tr>
+    <tr><td>✓</td><td><strong>Multi-company support</strong> — Tracks company per change in multi-company setups.</td></tr>
+    <tr><td>✓</td><td><strong>Accessible from two menus</strong> — Inventory → Configuration and Sales → Configuration.</td></tr>
+  </table>
+</div>
+
+<div class="section">
+  <h2>Screenshots</h2>
+
+  <p><strong>Full tracking list — Manual, Import and Scheduled Action all detected automatically:</strong></p>
+  <img src="screenshot_tracking_list.png" class="screenshot" alt="Product Price Tracking List"/>
+
+  <p><strong>Group By Origin — see all changes organized by source:</strong></p>
+  <img src="screenshot_group_by.png" class="screenshot" alt="Group By Origin"/>
+
+  <p><strong>Smart button on the product form — shows total price changes at a glance:</strong></p>
+  <img src="screenshot_smart_button.png" class="screenshot" alt="Smart Button on Product Form"/>
+
+  <p><strong>Click the smart button to see the full history for that product:</strong></p>
+  <img src="screenshot_detail.png" class="screenshot" alt="Price History Detail"/>
+
+  <p><strong>Accessible from Sales → Configuration menu:</strong></p>
+  <img src="screenshot_sales_menu.png" class="screenshot" alt="Sales Configuration Menu"/>
+</div>
+
+<div class="section">
+  <h2>Origin Detection</h2>
+  <p>The module automatically identifies where each price change came from:</p>
+  <table class="origins-table">
+    <tr><th>Origin</th><th>When it appears</th></tr>
+    <tr><td><strong>Manual</strong></td><td>User edits the sales price directly on the product form</td></tr>
+    <tr><td><strong>Import</strong></td><td>Price changed via CSV or Excel import</td></tr>
+    <tr><td><strong>Scheduled Action</strong></td><td>Price updated by an automated cron job</td></tr>
+    <tr><td><strong>Button Action</strong></td><td>Price changed by clicking a button in Odoo</td></tr>
+    <tr><td><strong>Mass Update</strong></td><td>Multiple products updated at the same time</td></tr>
+    <tr><td><strong>Automated Process</strong></td><td>Any other automated change not covered above</td></tr>
+    <tr><td><strong>Custom Origin</strong></td><td>Developers can pass a custom origin via context</td></tr>
+  </table>
+</div>
+
+<div class="section">
+  <h2>How to Use</h2>
+  <p>
+    Install the module and start using Odoo normally. Every time a product's sales price changes, a record is automatically created.
+    No setup required.
+  </p>
+  <p>Access your tracking records from:</p>
+  <ul>
+    <li><strong>Inventory → Configuration → Product Price Tracking</strong></li>
+    <li><strong>Sales → Configuration → Product Price Tracking</strong></li>
+    <li>Directly from any product form via the <strong>Price Changes</strong> smart button</li>
+    <li>The <strong>Price History</strong> tab on the product form</li>
+  </ul>
+  <div class="highlight-box">
+    <strong>Note:</strong> The smart button and Price History tab only appear after at least one price change has been recorded for that product.
+    This is correct — if no changes have been made, there is nothing to show.
+  </div>
+</div>
+
+<div class="section">
+  <h2>Technical Information</h2>
+  <div class="two-col">
+    <div class="col">
+      <table class="features-table">
+        <tr><td><strong>Module Name</strong></td><td>scopysoft_product_price_tracking</td></tr>
+        <tr><td><strong>Version</strong></td><td>16.0.1.0.0</td></tr>
+        <tr><td><strong>License</strong></td><td>OPL-1</td></tr>
+        <tr><td><strong>Author</strong></td><td>ScopySoft</td></tr>
+      </table>
+    </div>
+    <div class="col">
+      <table class="features-table">
+        <tr><td><strong>Dependencies</strong></td><td>product, stock, sale</td></tr>
+        <tr><td><strong>Odoo Online</strong></td><td>❌ Not available</td></tr>
+        <tr><td><strong>Odoo.sh</strong></td><td>✅ Supported</td></tr>
+        <tr><td><strong>On-Premise</strong></td><td>✅ Supported</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h2>FAQ</h2>
+  <div class="faq-item">
+    <h3>Why doesn't the smart button show on my product?</h3>
+    <p>The smart button only appears after at least one price change has been recorded. Change the sales price and save — the button will appear immediately.</p>
+  </div>
+  <div class="faq-item">
+    <h3>Does it work on Odoo Online (odoo.com)?</h3>
+    <p>No. Due to Odoo's platform restrictions, third-party modules cannot be installed on Odoo Online (SaaS). This module works on Odoo.sh and self-hosted (On-Premise) installations only.</p>
+  </div>
+  <div class="faq-item">
+    <h3>Does it track cost changes too?</h3>
+    <p>No — this module tracks the Sales Price (list_price) only. For tracking cost (standard_price) changes, check our companion module: Product Cost Tracking.</p>
+  </div>
+  <div class="faq-item">
+    <h3>Will it track historical changes before installation?</h3>
+    <p>No — tracking begins from the moment the module is installed. Previous changes are not retroactively recorded.</p>
+  </div>
+  <div class="faq-item">
+    <h3>Can I export the tracking data?</h3>
+    <p>Yes — use the export button (download icon) at the top of the tracking list to export to Excel or CSV.</p>
+  </div>
+</div>
+
+<div class="section">
+  <h2>Support</h2>
+  <p>For questions, issues or feature requests, contact us at: <a href="mailto:opeyemiajetunmobi9@gmail.com">opeyemiajetunmobi9@gmail.com</a></p>
+  <p>We respond within 24–48 hours on business days.</p>
+</div>
+
+<div class="footer">
+  &copy; 2026 ScopySoft. All rights reserved. | Product Price Tracking for Odoo 16.0
+</div>
+
+</body>
+</html>
