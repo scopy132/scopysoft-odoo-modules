@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Tree View -->
+    <record id="view_product_price_tracking_tree" model="ir.ui.view">
+        <field name="name">product.price.tracking.tree</field>
+        <field name="model">product.price.tracking</field>
+        <field name="arch" type="xml">
+            <tree string="Product Price Tracking" create="false" edit="false" delete="false">
+                <field name="currency_id" column_invisible="1" />
+                <field name="create_date" string="Date" />
+                <field name="product_id" />
+                <field name="default_code" optional="show" />
+                <field name="user_id" />
+                <field name="origin" optional="show" />
+                <field name="old_price" widget="monetary" options="{'currency_field': 'currency_id'}" />
+                <field name="new_price" widget="monetary" options="{'currency_field': 'currency_id'}" />
+                <field name="price_difference" widget="monetary" options="{'currency_field': 'currency_id'}"
+                    decoration-success="price_difference &gt; 0"
+                    decoration-danger="price_difference &lt; 0" />
+                <field name="price_difference_percent"
+                    decoration-success="price_difference_percent &gt; 0"
+                    decoration-danger="price_difference_percent &lt; 0" />
+                <field name="company_id" groups="base.group_multi_company" optional="show" />
+            </tree>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_product_price_tracking_form" model="ir.ui.view">
+        <field name="name">product.price.tracking.form</field>
+        <field name="model">product.price.tracking</field>
+        <field name="arch" type="xml">
+            <form string="Price Change Detail" create="false" edit="false" delete="false">
+                <sheet>
+                    <group>
+                        <group name="product_info" string="Product Information">
+                            <field name="product_id" />
+                            <field name="product_tmpl_id" />
+                            <field name="default_code" />
+                            <field name="company_id" groups="base.group_multi_company" />
+                        </group>
+                        <group name="change_info" string="Change Information">
+                            <field name="create_date" string="Date &amp; Time" />
+                            <field name="user_id" />
+                            <field name="origin" />
+                            <field name="currency_id" column_invisible="1" />
+                        </group>
+                    </group>
+                    <group>
+                        <group name="price_details" string="Price Details">
+                            <field name="old_price" widget="monetary" />
+                            <field name="new_price" widget="monetary" />
+                            <field name="price_difference" widget="monetary" />
+                            <field name="price_difference_percent" />
+                        </group>
+                        <group name="notes" string="Notes">
+                            <field name="notes" nolabel="1" />
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Search View -->
+    <record id="view_product_price_tracking_search" model="ir.ui.view">
+        <field name="name">product.price.tracking.search</field>
+        <field name="model">product.price.tracking</field>
+        <field name="arch" type="xml">
+            <search string="Product Price Tracking">
+                <field name="product_id" string="Product" />
+                <field name="default_code" string="Internal Reference" />
+                <field name="user_id" string="User" />
+                <field name="origin" string="Origin" />
+                <filter string="Today" name="filter_today"
+                    domain="[('create_date', '&gt;=', context_today().strftime('%Y-%m-%d'))]" />
+                <filter string="This Week" name="filter_week"
+                    domain="[('create_date', '&gt;=', (context_today() - relativedelta(weeks=1)).strftime('%Y-%m-%d'))]" />
+                <filter string="This Month" name="filter_month"
+                    domain="[('create_date', '&gt;=', (context_today() - relativedelta(months=1)).strftime('%Y-%m-%d'))]" />
+                <separator />
+                <filter string="Price Increased" name="filter_increased"
+                    domain="[('price_difference', '&gt;', 0)]" />
+                <filter string="Price Decreased" name="filter_decreased"
+                    domain="[('price_difference', '&lt;', 0)]" />
+                <separator />
+                <filter string="Manual Changes" name="filter_manual"
+                    domain="[('origin', '=', 'Manual')]" />
+                <filter string="Import Changes" name="filter_import"
+                    domain="[('origin', '=', 'Import')]" />
+                <filter string="Scheduled Actions" name="filter_cron"
+                    domain="[('origin', '=', 'Scheduled Action')]" />
+                <group expand="1" string="Group By">
+                    <filter string="Product" name="group_product"
+                        context="{'group_by': 'product_id'}" />
+                    <filter string="User" name="group_user"
+                        context="{'group_by': 'user_id'}" />
+                    <filter string="Origin" name="group_origin"
+                        context="{'group_by': 'origin'}" />
+                    <filter string="Company" name="group_company"
+                        context="{'group_by': 'company_id'}"
+                        groups="base.group_multi_company" />
+                    <filter string="Date" name="group_date"
+                        context="{'group_by': 'create_date:month'}" />
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_product_price_tracking" model="ir.actions.act_window">
+        <field name="name">Product Price Tracking</field>
+        <field name="res_model">product.price.tracking</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_product_price_tracking_search" />
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No price changes recorded yet
+            </p>
+            <p>
+                All changes to product sales prices will be automatically tracked here.
+                This includes manual changes, imports, scheduled actions, and
+                modifications from other modules.
+            </p>
+        </field>
+    </record>
+
+    <!-- Inventory Menu -->
+    <menuitem id="menu_product_price_tracking_inventory"
+        name="Product Price Tracking"
+        parent="stock.menu_stock_config_settings"
+        action="action_product_price_tracking"
+        sequence="102" />
+
+    <!-- Sales Menu -->
+    <menuitem id="menu_product_price_tracking_sales"
+        name="Product Price Tracking"
+        parent="sale.menu_sale_config"
+        action="action_product_price_tracking"
+        sequence="102" />
+
+</odoo>
