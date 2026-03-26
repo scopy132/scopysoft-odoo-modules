@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Stock Restrictions &amp; Controls – ScopySoft</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+
+<!--
+  ╔══════════════════════════════════════════════════════════════╗
+  ║         SCOPYSOFT CLARITY — BRAND STYLE GUIDE v1.0          ║
+  ╠══════════════════════════════════════════════════════════════╣
+  ║  Fonts:    Syne (headings) + Manrope (body)                  ║
+  ║  Anchors:  --navy #0f1729 | --accent (per module) | --white  ║
+  ║  Sections: Hero → Problem → Features → Restrictions →        ║
+  ║            Screenshots → FAQ → Support                       ║
+  ║  Rules:    FAQ uses h2. Screenshots numbered. No stock        ║
+  ║            Odoo layouts. Every module uses this exact shell.  ║
+  ╚══════════════════════════════════════════════════════════════╝
+-->
+
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --navy:    #0f1729;
+  --navy2:   #1a2540;
+  --accent:  #e67e22;
+  --accent2: #f39c12;
+  --green:   #27ae60;
+  --red:     #e74c3c;
+  --white:   #ffffff;
+  --off:     #f8f9fc;
+  --border:  #e2e8f0;
+  --text:    #1e293b;
+  --muted:   #64748b;
+  --light:   #f1f5f9;
+}
+
+body{
+  font-family:'Manrope',sans-serif;
+  color:var(--text);
+  background:var(--white);
+  line-height:1.7;
+  font-size:15px;
+}
+
+/* ─── HERO ─────────────────────────────────────────────────────── */
+.hero{
+  background:var(--navy);
+  color:#fff;
+  padding:56px 48px 52px;
+  position:relative;
+  overflow:hidden;
+}
+.hero::after{
+  content:'';
+  position:absolute;
+  top:0;right:0;bottom:0;
+  width:40%;
+  background:linear-gradient(135deg,transparent 40%,rgba(230,126,34,0.07) 100%);
+  pointer-events:none;
+}
+.hero-top{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin-bottom:28px;
+}
+.hero-badge{
+  background:var(--accent);
+  color:#fff;
+  font-family:'Syne',sans-serif;
+  font-size:10px;
+  font-weight:700;
+  letter-spacing:0.12em;
+  text-transform:uppercase;
+  padding:5px 14px;
+  border-radius:3px;
+}
+.hero-version{
+  font-family:'Syne',sans-serif;
+  font-size:10px;
+  font-weight:600;
+  letter-spacing:0.1em;
+  text-transform:uppercase;
+  color:rgba(255,255,255,0.45);
+}
+.hero h1{
+  font-family:'Syne',sans-serif;
+  font-size:46px;
+  font-weight:800;
+  line-height:1.08;
+  max-width:660px;
+  margin-bottom:18px;
+  color:#fff;
+}
+.hero h1 span{color:var(--accent);}
+.hero-lead{
+  font-size:16px;
+  color:rgba(255,255,255,0.62);
+  max-width:580px;
+  margin-bottom:36px;
+  font-weight:300;
+  line-height:1.75;
+}
+.hero-pills{display:flex;flex-wrap:wrap;gap:8px;}
+.pill{
+  font-size:11px;font-weight:600;
+  letter-spacing:0.04em;
+  background:rgba(255,255,255,0.07);
+  border:1px solid rgba(255,255,255,0.13);
+  border-radius:20px;
+  padding:5px 14px;
+  color:rgba(255,255,255,0.78);
+}
+
+/* ─── SECTION SHELL ─────────────────────────────────────────────── */
+.section{padding:60px 48px;}
+.section--alt{background:var(--off);}
+.section--dark{background:var(--navy);color:#fff;}
+
+.label{
+  font-family:'Syne',sans-serif;
+  font-size:10px;font-weight:700;
+  letter-spacing:0.16em;text-transform:uppercase;
+  color:var(--accent);
+  margin-bottom:10px;
+}
+.section--dark .label{color:var(--accent2);}
+
+h2.sec-title{
+  font-family:'Syne',sans-serif;
+  font-size:32px;font-weight:800;
+  line-height:1.15;
+  color:var(--navy);
+  margin-bottom:14px;
+}
+.section--dark h2.sec-title{color:#fff;}
+
+.sec-sub{
+  font-size:15px;color:var(--muted);
+  max-width:640px;margin-bottom:48px;line-height:1.75;
+}
+.section--dark .sec-sub{color:rgba(255,255,255,0.55);}
+
+/* ─── PROBLEM BOX ───────────────────────────────────────────────── */
+.problem-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:16px;
+  margin-bottom:40px;
+}
+.problem-card{
+  background:var(--white);
+  border:1px solid var(--border);
+  border-left:3px solid var(--red);
+  border-radius:6px;
+  padding:20px 22px;
+}
+.problem-card h4{
+  font-size:13px;font-weight:700;
+  color:var(--navy);margin-bottom:6px;
+}
+.problem-card p{font-size:13px;color:var(--muted);line-height:1.6;}
+.solution-note{
+  background:linear-gradient(135deg,#e8f5e9,#f1f8e9);
+  border:1px solid #a5d6a7;
+  border-radius:8px;
+  padding:22px 28px;
+  display:flex;gap:16px;align-items:flex-start;
+}
+.solution-note p{font-size:14px;color:#2e7d32;line-height:1.65;}
+.solution-note strong{font-weight:700;}
+
+/* ─── FEATURE GRID ──────────────────────────────────────────────── */
+.feat-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+  gap:20px;
+}
+.feat-card{
+  background:var(--white);
+  border:1px solid var(--border);
+  border-radius:8px;
+  padding:26px 22px;
+  transition:box-shadow 0.2s,transform 0.2s;
+}
+.feat-card:hover{box-shadow:0 8px 28px rgba(15,23,41,0.08);transform:translateY(-2px);}
+.feat-icon{
+  font-size:22px;
+  width:46px;height:46px;
+  background:var(--light);
+  border-radius:8px;
+  display:flex;align-items:center;justify-content:center;
+  margin-bottom:16px;
+}
+.feat-card h3{
+  font-family:'Syne',sans-serif;
+  font-size:14px;font-weight:700;
+  color:var(--navy);margin-bottom:8px;
+}
+.feat-card p{font-size:13px;color:var(--muted);line-height:1.65;}
+
+/* ─── ADMIN CALLOUT ─────────────────────────────────────────────── */
+.admin-callout{
+  background:linear-gradient(135deg,rgba(230,126,34,0.08),rgba(243,156,18,0.04));
+  border:1px solid rgba(230,126,34,0.3);
+  border-left:4px solid var(--accent);
+  border-radius:8px;
+  padding:28px 32px;
+  margin-bottom:48px;
+  display:flex;gap:20px;align-items:flex-start;
+}
+.admin-callout-icon{font-size:28px;flex-shrink:0;margin-top:2px;}
+.admin-callout h3{
+  font-family:'Syne',sans-serif;
+  font-size:16px;font-weight:700;
+  color:var(--navy);margin-bottom:8px;
+}
+.admin-callout p{font-size:14px;color:var(--muted);line-height:1.65;}
+.admin-callout strong{color:var(--navy);font-weight:700;}
+
+/* ─── RESTRICTION LIST ──────────────────────────────────────────── */
+.restriction-group{margin-bottom:44px;}
+.restriction-group:last-child{margin-bottom:0;}
+.rg-label{
+  font-family:'Syne',sans-serif;
+  font-size:11px;font-weight:700;
+  letter-spacing:0.12em;text-transform:uppercase;
+  color:var(--accent);
+  padding-bottom:12px;
+  border-bottom:2px solid var(--border);
+  margin-bottom:20px;
+}
+.restriction-item{
+  display:flex;gap:18px;align-items:flex-start;
+  padding:18px 0;
+  border-bottom:1px solid var(--border);
+}
+.restriction-item:last-child{border-bottom:none;}
+.ri-bullet{
+  flex-shrink:0;margin-top:4px;
+  width:8px;height:8px;
+  background:var(--accent);
+  border-radius:50%;
+}
+.ri-body h4{
+  font-size:14px;font-weight:700;
+  color:var(--navy);margin-bottom:5px;
+}
+.ri-body p{font-size:13px;color:var(--muted);line-height:1.6;}
+
+/* ─── SETTINGS PATH ─────────────────────────────────────────────── */
+.path-box{
+  background:var(--navy);
+  border-radius:8px;
+  padding:20px 28px;
+  margin-bottom:40px;
+  display:flex;gap:14px;align-items:center;
+}
+.path-box span{
+  font-family:'Syne',sans-serif;
+  font-size:12px;color:rgba(255,255,255,0.5);
+  letter-spacing:0.08em;text-transform:uppercase;
+  flex-shrink:0;
+}
+.path-steps{display:flex;flex-wrap:wrap;gap:6px;align-items:center;}
+.ps{
+  background:rgba(255,255,255,0.1);
+  border:1px solid rgba(255,255,255,0.16);
+  border-radius:4px;
+  padding:4px 12px;
+  font-size:13px;color:rgba(255,255,255,0.88);
+  font-weight:500;
+}
+.pa{color:rgba(255,255,255,0.3);font-size:11px;}
+
+/* ─── SCREENSHOTS ───────────────────────────────────────────────── */
+.ss-block{margin-bottom:56px;}
+.ss-block:last-child{margin-bottom:0;}
+.ss-num{
+  display:inline-flex;align-items:center;gap:10px;
+  font-family:'Syne',sans-serif;
+  font-size:10px;font-weight:700;
+  letter-spacing:0.14em;text-transform:uppercase;
+  color:var(--accent);
+  margin-bottom:12px;
+}
+.ss-block h3{
+  font-family:'Syne',sans-serif;
+  font-size:20px;font-weight:700;
+  color:var(--navy);margin-bottom:8px;
+}
+.ss-block p{
+  font-size:14px;color:var(--muted);
+  max-width:600px;margin-bottom:20px;line-height:1.7;
+}
+.ss-frame{
+  border-radius:8px;overflow:hidden;
+  border:1px solid var(--border);
+  box-shadow:0 4px 24px rgba(15,23,41,0.09);
+}
+.ss-frame img{width:100%;display:block;}
+.ss-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+.ss-grid .ss-frame{margin:0;}
+
+/* ─── FAQ ───────────────────────────────────────────────────────── */
+.faq-item{
+  padding:36px 0;
+  border-bottom:1px solid var(--border);
+}
+.faq-item:first-child{border-top:1px solid var(--border);}
+.faq-item h2{
+  font-family:'Syne',sans-serif;
+  font-size:20px;font-weight:700;
+  color:var(--navy);
+  margin-bottom:16px;
+  line-height:1.3;
+}
+.faq-item p,.faq-item ul{
+  font-size:14px;color:var(--muted);
+  line-height:1.8;
+}
+.faq-item ul{padding-left:20px;}
+.faq-item ul li{margin-bottom:8px;}
+.faq-item strong{color:var(--text);font-weight:600;}
+
+/* ─── SUPPORT / CTA ─────────────────────────────────────────────── */
+.support-bar{
+  background:var(--navy);
+  padding:52px 48px;
+  display:flex;align-items:center;justify-content:space-between;
+  gap:32px;
+}
+.support-left h2{
+  font-family:'Syne',sans-serif;
+  font-size:26px;font-weight:800;
+  color:#fff;margin-bottom:8px;
+}
+.support-left p{font-size:14px;color:rgba(255,255,255,0.5);line-height:1.65;}
+.support-left a{color:var(--accent2);font-weight:600;text-decoration:none;}
+.support-right{
+  flex-shrink:0;
+  background:var(--accent);
+  color:#fff;
+  font-family:'Syne',sans-serif;
+  font-size:14px;font-weight:700;
+  letter-spacing:0.04em;
+  padding:14px 32px;
+  border-radius:6px;
+  text-align:center;
+  white-space:nowrap;
+}
+
+/* ─── BRAND FOOTER ──────────────────────────────────────────────── */
+.brand-footer{
+  background:#080e1a;
+  padding:20px 48px;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.brand-name{
+  font-family:'Syne',sans-serif;
+  font-size:18px;font-weight:800;color:#fff;
+}
+.brand-name em{font-style:normal;color:var(--accent);}
+.brand-sub{font-size:11px;color:rgba(255,255,255,0.3);margin-top:3px;letter-spacing:0.04em;}
+.brand-copy{font-size:11px;color:rgba(255,255,255,0.25);text-align:right;}
+
+@media(max-width:720px){
+  .hero,.section,.support-bar,.brand-footer{padding-left:24px;padding-right:24px;}
+  .hero h1{font-size:32px;}
+  .problem-grid{grid-template-columns:1fr;}
+  .feat-grid{grid-template-columns:1fr;}
+  .ss-grid{grid-template-columns:1fr;}
+  .support-bar{flex-direction:column;}
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════ HERO ═══════════ -->
+<div class="hero">
+  <div class="hero-top">
+    <span class="hero-badge">ScopySoft</span>
+    <span class="hero-version">Odoo 16.0 · Inventory · OPL-1</span>
+  </div>
+  <h1>Stock Restrictions<br/>&amp; <span>Controls</span></h1>
+  <p class="hero-lead">
+    Give your business complete control over every stock operation.
+    Block bad habits, enforce process, protect your inventory data —
+    with 12 independent restrictions and a full audit trail.
+  </p>
+  <div class="hero-pills">
+    <span class="pill">🔒 12 Restrictions</span>
+    <span class="pill">⚙ Per-Toggle Settings</span>
+    <span class="pill">👑 Admin Always Bypasses</span>
+    <span class="pill">📋 Audit Log</span>
+    <span class="pill">🏢 Multi-Company</span>
+    <span class="pill">$29 One-Time</span>
+  </div>
+</div>
+
+
+<!-- ═══════════ PROBLEM ═══════════ -->
+<div class="section section--alt">
+  <div class="label">The Problem</div>
+  <h2 class="sec-title">Stock Errors Cost Real Money</h2>
+  <p class="sec-sub">Without controls, any user can create receipts without a PO, validate wrong quantities, or backdate operations — and by the time you notice, the damage is done.</p>
+
+  <div class="problem-grid">
+    <div class="problem-card">
+      <h4>Receipts created without a Purchase Order</h4>
+      <p>Inventory gets updated with no traceability, no approval, and no matching purchase record.</p>
+    </div>
+    <div class="problem-card">
+      <h4>Wrong quantities validated</h4>
+      <p>Users receive 150 units when 100 were ordered — stock valuation is wrong before anyone notices.</p>
+    </div>
+    <div class="problem-card">
+      <h4>Backdated operations</h4>
+      <p>Dates are changed retroactively, corrupting your stock history and making audits unreliable.</p>
+    </div>
+    <div class="problem-card">
+      <h4>Deliveries from unregistered vendors</h4>
+      <p>Products received from suppliers not on your approved list, bypassing procurement controls.</p>
+    </div>
+    <div class="problem-card">
+      <h4>Negative stock</h4>
+      <p>Deliveries processed when there's nothing in stock — creating phantom inventory that doesn't exist.</p>
+    </div>
+    <div class="problem-card">
+      <h4>No record of who tried what</h4>
+      <p>When something goes wrong you have no log of which user attempted the blocked operation.</p>
+    </div>
+  </div>
+
+  <div class="solution-note">
+    <div style="font-size:24px;flex-shrink:0;">✅</div>
+    <p>
+      <strong>Stock Restrictions &amp; Controls</strong> puts a configurable enforcement layer over every stock operation.
+      Turn on only the restrictions you need — each one is fully independent.
+      Admins always bypass everything. Inventory Managers bypass user-level controls.
+      Every blocked attempt is logged with who, when, and what they tried.
+    </p>
+  </div>
+</div>
+
+
+<!-- ═══════════ ADMIN RULE ═══════════ -->
+<div class="section">
+  <div class="label">Core Principle</div>
+  <h2 class="sec-title">Admin Always Wins. No Exceptions.</h2>
+
+  <div class="admin-callout">
+    <div class="admin-callout-icon">👑</div>
+    <div>
+      <h3>Administrators bypass every single restriction — automatically</h3>
+      <p>
+        Any Odoo user with the <strong>Administrator</strong> role bypasses all 12 restrictions with zero exceptions.
+        No configuration needed — it's built into the core logic.
+        <br/><br/>
+        <strong>Inventory Managers</strong> bypass the three user-control restrictions (validate, cancel, delete) but are still subject to quantity controls, stock controls, and vendor controls — unless they are also Administrators.
+        <br/><br/>
+        <strong>Regular users</strong> are subject to whatever restrictions are enabled in settings.
+      </p>
+    </div>
+  </div>
+
+  <div class="path-box">
+    <span>Settings path</span>
+    <div class="path-steps">
+      <span class="ps">Inventory</span><span class="pa">→</span>
+      <span class="ps">Configuration</span><span class="pa">→</span>
+      <span class="ps">Settings</span><span class="pa">→</span>
+      <span class="ps">Stock Restrictions</span>
+    </div>
+  </div>
+  <p style="font-size:14px;color:var(--muted);">The Stock Restrictions section is only visible to Inventory Managers and Administrators. Regular users cannot access or modify any restriction settings.</p>
+</div>
+
+
+<!-- ═══════════ ALL RESTRICTIONS ═══════════ -->
+<div class="section section--alt">
+  <div class="label">All Restrictions</div>
+  <h2 class="sec-title">12 Controls. Every Toggle Independent.</h2>
+  <p class="sec-sub">Turn on only what your business needs. Enabling one restriction never affects another. Each fires its own clear error message with actionable instructions.</p>
+
+  <div class="restriction-group">
+    <div class="rg-label">📦 Receipts &amp; Deliveries</div>
+    <div class="restriction-item">
+      <div class="ri-bullet"></div>
+      <div class="ri-body">
+        <h4>Block manual receipts without a Purchase Order</h4>
+        <p>Receipts must always be created from a PO. Anyone trying to create one manually gets a clear error with exact navigation instructions on where to go instead.</p>
+      </div>
+    </div>
+    <div class="restriction-item">
+      <div class="ri-bullet"></div>
+      <div class="ri-body">
+        <h4>Block manual deliveries without a Sales Order</h4>
+        <p>Deliveries must always be created from a SO. Prevents loose, untracked deliveries from slipping through without a source document.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="restriction-group">
+    <div class="rg-label">🔢 Quantity Controls</div>
+    <div class="restriction-item">
+      <div class="ri-bullet"></div>
+      <div class="ri-body">
+        <h4>Block over-validation of quantities</h4>
+        <p>Cannot validate more than the demanded quantity. The error shows exactly: product, demanded qty, done qty, and maximum allowed.</p>
+      </div>
+    </div>
+    <div class="restriction-item">
+      <div class="ri-bullet"></div>
+      <div class="ri-body">
+        <h4>Block under-validation of quantities</h4>
+        <p>Cannot validate less than the demanded quantity. Forces full processing — no partial sneaking through without manager involvement.</p>
+      </div>
+    </div>
+    <div class="restriction-item">
+      <div class="ri-bullet"></div>
+      <div class="ri-body">
+        <h4>Configurable tolerance % for over/under</h4>
+        <p>Set a tolerance that applies to both over and under validation. Example: 5% means ±5% of demanded qty is allowed. Set to 0 for strict enforcement.</p>
+      </div>
+    </div>
+    <div class="restriction-item">
+      <div class="ri-bullet"></div>
+      <div class="ri-body">
+        <h4>Block zero-quantity validation</h4>
+        <p>Cannot validate an operation where done quantity is 0. Stops accidental empty validations that corrupt stock records.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="restriction-group">
+    <div class="rg-label">📊 Stock Controls</div>
+    <div class="restriction-item">
+      <div class="ri-bullet"></div>
+      <div class="ri-body">
+        <h4>Block negative stock on deliveries</h4>
+        <p>Deliveries that would push stock below zero are blocked. The error clearly shows: product, current stock, and what was attempted.</p>
+      </div>
+    </div>
+    <div class="restriction-item">
+      <div class="ri-bullet"></div>
+      <div class="ri-body">
+        <h4>Block backdating stock operations</h4>
+        <p>Scheduled dates cannot be set to a date in the past. Protects the integrity of your stock history from retroactive manipulation.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="restriction-group">
+    <div class="rg-label">👥 User Controls</div>
+    <div class="restriction-item">
+      <div class="ri-bullet"></div>
+      <div class="ri-body">
+        <h4>Only Inventory Managers can validate operations</h4>
+        <p>Regular warehouse users cannot click Validate. All validation must be done by an Inventory Manager or Administrator.</p>
+      </div>
+    </div>
+    <div class="restriction-item">
+      <div class="ri-bullet"></div>
+      <div class="ri-body">
+        <h4>Only Inventory Managers can cancel validated operations</h4>
+        <p>Once a picking is Done, regular users cannot cancel it. Prevents unauthorised reversal of completed stock operations.</p>
+      </div>
+    </div>
+    <div class="restriction-item">
+      <div class="ri-bullet"></div>
+      <div class="ri-body">
+        <h4>Only Inventory Managers can delete draft operations</h4>
+        <p>Draft pickings cannot be deleted by regular users. Prevents accidental or intentional removal of pending operations.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="restriction-group">
+    <div class="rg-label">🏭 Vendor Controls</div>
+    <div class="restriction-item">
+      <div class="ri-bullet"></div>
+      <div class="ri-body">
+        <h4>Block receiving from unregistered vendors</h4>
+        <p>Receipts from vendors not on the product's approved vendor list are blocked at validation. Enforces your procurement policy automatically.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="restriction-group">
+    <div class="rg-label">📋 Audit</div>
+    <div class="restriction-item">
+      <div class="ri-bullet"></div>
+      <div class="ri-body">
+        <h4>Restriction Audit Log</h4>
+        <p>When enabled, every blocked attempt is recorded with the user's name, timestamp, operation reference, restriction triggered, and full details. Admin bypasses are recorded separately and highlighted. View it under Inventory → Configuration → Restriction Audit Log.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════ SCREENSHOTS ═══════════ -->
+<div class="section">
+  <div class="label">Screenshots</div>
+  <h2 class="sec-title">Real Results from a Live Database</h2>
+  <p class="sec-sub">Every screenshot below is taken from an actual Odoo 16 installation during testing. No mockups.</p>
+
+  <div class="ss-block">
+    <div class="ss-num">01 — Settings</div>
+    <h3>The Stock Restrictions Settings Panel</h3>
+    <p>All 12 restrictions organised into clear sections. Enable only what you need — each toggle is fully independent. Accessible from Inventory → Configuration → Settings → Stock Restrictions.</p>
+    <div class="ss-frame"><img src="ss_settings.png" alt="Stock Restrictions settings panel"/></div>
+  </div>
+
+  <div class="ss-block">
+    <div class="ss-num">02 — Error Messages</div>
+    <h3>Clear, Actionable Error Messages for Every Restriction</h3>
+    <p>Every restriction shows a detailed error — not just "not allowed" but exactly what went wrong, the product name, the quantities involved, and what the user should do instead.</p>
+    <div class="ss-grid">
+      <div>
+        <p style="font-size:12px;color:var(--muted);margin-bottom:8px;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;">Block Manual Receipt</p>
+        <div class="ss-frame"><img src="ss_error_receipt.png" alt="Block manual receipt error"/></div>
+      </div>
+      <div>
+        <p style="font-size:12px;color:var(--muted);margin-bottom:8px;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;">Block Over-Validation</p>
+        <div class="ss-frame"><img src="ss_error_over.png" alt="Block over-validation error"/></div>
+      </div>
+      <div>
+        <p style="font-size:12px;color:var(--muted);margin-bottom:8px;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;">Block Under-Validation</p>
+        <div class="ss-frame"><img src="ss_error_under.png" alt="Block under-validation error"/></div>
+      </div>
+      <div>
+        <p style="font-size:12px;color:var(--muted);margin-bottom:8px;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;">Block Negative Stock</p>
+        <div class="ss-frame"><img src="ss_error_negative.png" alt="Block negative stock error"/></div>
+      </div>
+      <div>
+        <p style="font-size:12px;color:var(--muted);margin-bottom:8px;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;">Block Unregistered Vendor</p>
+        <div class="ss-frame"><img src="ss_error_vendor.png" alt="Block unregistered vendor error"/></div>
+      </div>
+      <div>
+        <p style="font-size:12px;color:var(--muted);margin-bottom:8px;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;">Block Backdating</p>
+        <div class="ss-frame"><img src="ss_error_backdate.png" alt="Block backdating error"/></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ss-block">
+    <div class="ss-num">03 — Manager Only Validate</div>
+    <h3>User Controls Work Per Role</h3>
+    <p>When "Only Inventory Managers can validate" is enabled, regular users see this error. Inventory Managers and Administrators validate without any restriction.</p>
+    <div class="ss-frame"><img src="ss_error_validate.png" alt="Only managers can validate error"/></div>
+  </div>
+
+  <div class="ss-block">
+    <div class="ss-num">04 — Audit Log</div>
+    <h3>Complete Restriction Audit Trail</h3>
+    <p>The audit log captures every event — blocked attempts show the exact user who tried, the restriction that fired, the operation reference, and full details. Administrator bypasses are highlighted separately.</p>
+    <div class="ss-frame"><img src="ss_audit_log.png" alt="Restriction audit log"/></div>
+  </div>
+</div>
+
+
+<!-- ═══════════ FAQ ═══════════ -->
+<div class="section section--alt">
+  <div class="label">FAQ</div>
+  <h2 class="sec-title">Common Questions</h2>
+
+  <div class="faq-item">
+    <h2>Where do I find the restriction settings?</h2>
+    <p>Go to <strong>Inventory → Configuration → Settings</strong> and scroll to the <strong>Stock Restrictions</strong> section. This section is only visible to Inventory Managers and Administrators — regular users cannot see or change any settings.</p>
+  </div>
+
+  <div class="faq-item">
+    <h2>Does the Administrator really bypass everything?</h2>
+    <p>Yes — absolutely every restriction, with no exceptions. Any Odoo user with the <strong>Administrator</strong> role (Settings/Technical access) bypasses all 12 restrictions automatically. This is by design so your system admin always retains full operational control. Their bypass actions are still recorded in the audit log when it is enabled.</p>
+  </div>
+
+  <div class="faq-item">
+    <h2>What about Inventory Managers?</h2>
+    <p>Inventory Managers bypass the three <strong>User Control</strong> restrictions — validate, cancel, and delete. However, they are still subject to quantity controls (over, under, zero), stock controls (negative, backdate), and vendor controls — unless they are also Administrators.</p>
+  </div>
+
+  <div class="faq-item">
+    <h2>Can I enable just one or two restrictions?</h2>
+    <p>Yes. Every restriction is completely independent. You can enable only the ones you need — for example, just "Block negative stock" and "Block zero-quantity" while leaving everything else off. There is no minimum required.</p>
+  </div>
+
+  <div class="faq-item">
+    <h2>What does the tolerance % do exactly?</h2>
+    <p>The tolerance applies to both over and under validation. For example, with a demanded quantity of 100 and 5% tolerance set:</p>
+    <ul>
+      <li><strong>Over-validation:</strong> maximum allowed is 105</li>
+      <li><strong>Under-validation:</strong> minimum required is 95</li>
+    </ul>
+    <p>Set tolerance to 0 for strict enforcement with no wiggle room.</p>
+  </div>
+
+  <div class="faq-item">
+    <h2>Why does "Under-validation" also block the Inventory Manager?</h2>
+    <p>Quantity controls apply to everyone except Administrators. An Inventory Manager shouldn't be able to receive the wrong quantity any more than a regular user. If a Manager needs to bypass a quantity restriction, they should use an Administrator account for that specific operation.</p>
+  </div>
+
+  <div class="faq-item">
+    <h2>How does the audit log work?</h2>
+    <p>Enable it in Settings → Stock Restrictions → "Enable restriction audit log". After that, every blocked attempt is recorded with the user, timestamp, restriction name, operation reference, and details. Go to <strong>Inventory → Configuration → Restriction Audit Log</strong> to view it. Administrator bypasses are highlighted in amber so you can tell them apart from genuine violations.</p>
+  </div>
+
+  <div class="faq-item">
+    <h2>Does it slow down my Odoo instance?</h2>
+    <p>No. The restrictions only run lightweight checks — a config parameter read and simple comparisons. The audit log only fires when a restriction is triggered, not on every operation. Performance impact is negligible even in high-volume warehouses.</p>
+  </div>
+
+  <div class="faq-item">
+    <h2>Is it compatible with Odoo 16 Community and Enterprise?</h2>
+    <p>Yes. The module is built and tested on Odoo 16.0 and works on both Community and Enterprise editions.</p>
+  </div>
+
+  <div class="faq-item">
+    <h2>Does it work in multi-company setups?</h2>
+    <p>Yes. All restriction settings are stored per-company via Odoo's standard config parameter system. Each company's users see and apply only their own company's restriction settings.</p>
+  </div>
+</div>
+
+
+<!-- ═══════════ SUPPORT ═══════════ -->
+<div class="support-bar">
+  <div class="support-left">
+    <h2>Need help? We've got you.</h2>
+    <p>Email us at <a href="mailto:opeyemiajetunmobi9@gmail.com">opeyemiajetunmobi9@gmail.com</a> and we respond within 1–2 business days.</p>
+  </div>
+  <div class="support-right">📧 Contact Support</div>
+</div>
+
+
+<!-- ═══════════ FOOTER ═══════════ -->
+<div class="brand-footer">
+  <div>
+    <div class="brand-name">Scopy<em>Soft</em></div>
+    <div class="brand-sub">Practical Odoo modules that just work.</div>
+  </div>
+  <div class="brand-copy">© 2026 ScopySoft · OPL-1 License<br/>Built for Odoo 16.0</div>
+</div>
+
+</body>
+</html>

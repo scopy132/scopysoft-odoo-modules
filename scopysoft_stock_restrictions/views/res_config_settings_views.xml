@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="res_config_settings_view_stock_restrictions" model="ir.ui.view">
+        <field name="name">res.config.settings.view.stock.restrictions</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="stock.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[hasclass('settings')]" position="inside">
+
+                <div class="app_settings_block" data-string="Stock Restrictions" string="Stock Restrictions"
+                     data-key="scopysoft_stock_restrictions">
+
+                    <!-- RECEIPTS & DELIVERIES -->
+                    <h2>Receipts &amp; Deliveries</h2>
+                    <div class="row mt16 o_settings_container">
+
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_left_pane">
+                                <field name="sr_block_manual_receipt"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="sr_block_manual_receipt"/>
+                                <div class="text-muted">
+                                    Receipts must always come from a Purchase Order. Manual creation is blocked.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_left_pane">
+                                <field name="sr_block_manual_delivery"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="sr_block_manual_delivery"/>
+                                <div class="text-muted">
+                                    Deliveries must always come from a Sales Order. Manual creation is blocked.
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- QUANTITY CONTROLS -->
+                    <h2>Quantity Controls</h2>
+                    <div class="row mt16 o_settings_container">
+
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_left_pane">
+                                <field name="sr_block_over_validation"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="sr_block_over_validation"/>
+                                <div class="text-muted">
+                                    Cannot validate more than the demanded quantity (subject to tolerance below).
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_left_pane">
+                                <field name="sr_block_under_validation"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="sr_block_under_validation"/>
+                                <div class="text-muted">
+                                    Cannot validate less than the demanded quantity (subject to tolerance below).
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_left_pane"/>
+                            <div class="o_setting_right_pane">
+                                <label for="sr_validation_tolerance" string="Quantity Tolerance (%)"/>
+                                <div class="text-muted">
+                                    Allow this % over or under the demanded quantity. Set to 0 for strict enforcement.
+                                </div>
+                                <div class="content-group">
+                                    <div class="row">
+                                        <label for="sr_validation_tolerance" class="col-lg-3 o_light_label" string="Tolerance %"/>
+                                        <field name="sr_validation_tolerance" class="col-lg-2"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_left_pane">
+                                <field name="sr_block_zero_qty"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="sr_block_zero_qty"/>
+                                <div class="text-muted">
+                                    Cannot validate a stock operation where done quantity is 0.
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- STOCK CONTROLS -->
+                    <h2>Stock Controls</h2>
+                    <div class="row mt16 o_settings_container">
+
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_left_pane">
+                                <field name="sr_block_negative_stock"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="sr_block_negative_stock"/>
+                                <div class="text-muted">
+                                    Deliveries that would push stock below zero are blocked.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_left_pane">
+                                <field name="sr_block_backdate"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="sr_block_backdate"/>
+                                <div class="text-muted">
+                                    Scheduled dates cannot be set to a date in the past.
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- USER CONTROLS -->
+                    <h2>User Controls</h2>
+                    <div class="row mt16 o_settings_container">
+
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_left_pane">
+                                <field name="sr_managers_only_validate"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="sr_managers_only_validate"/>
+                                <div class="text-muted">
+                                    Only Inventory Managers and Administrators can validate stock operations.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_left_pane">
+                                <field name="sr_managers_only_cancel"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="sr_managers_only_cancel"/>
+                                <div class="text-muted">
+                                    Only Inventory Managers and Administrators can cancel validated operations.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_left_pane">
+                                <field name="sr_managers_only_delete"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="sr_managers_only_delete"/>
+                                <div class="text-muted">
+                                    Only Inventory Managers and Administrators can delete draft operations.
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- VENDOR CONTROLS -->
+                    <h2>Vendor Controls</h2>
+                    <div class="row mt16 o_settings_container">
+
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_left_pane">
+                                <field name="sr_block_unregistered_vendor"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="sr_block_unregistered_vendor"/>
+                                <div class="text-muted">
+                                    Receipts from vendors not on the product's approved vendor list are blocked.
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- AUDIT -->
+                    <h2>Audit &amp; Notifications</h2>
+                    <div class="row mt16 o_settings_container">
+
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_left_pane">
+                                <field name="sr_enable_audit_log"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="sr_enable_audit_log"/>
+                                <div class="text-muted">
+                                    All blocked attempts and admin bypasses are saved to the Restriction Audit Log.
+                                    View it under Inventory → Configuration → Restriction Audit Log.
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
