@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Backup Run List View -->
+    <record id="view_svl_fixer_backup_list" model="ir.ui.view">
+        <field name="name">svl.fixer.backup.list</field>
+        <field name="model">svl.fixer.backup</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name" />
+                <field name="run_date" />
+                <field name="user_id" />
+                <field name="product_count" />
+                <field name="line_count" />
+                <field name="restored" />
+            </tree>
+        </field>
+    </record>
+
+    <!-- Backup Run Form View -->
+    <record id="view_svl_fixer_backup_form" model="ir.ui.view">
+        <field name="name">svl.fixer.backup.form</field>
+        <field name="model">svl.fixer.backup</field>
+        <field name="arch" type="xml">
+            <form string="SVL Fixer Backup">
+                <header>
+                    <button name="action_restore"
+                        string="Restore This Backup"
+                        type="object"
+                        class="btn-primary"
+                        confirm="This will overwrite current SVL values with the backed-up values for every line below. Continue?"
+                        attrs="{'invisible': [('restored', '=', True)]}" />
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" />
+                            <field name="run_date" />
+                            <field name="user_id" />
+                            <field name="company_id" />
+                        </group>
+                        <group>
+                            <field name="product_count" />
+                            <field name="line_count" />
+                            <field name="restored" />
+                            <field name="restored_date" attrs="{'invisible': [('restored', '=', False)]}" />
+                        </group>
+                    </group>
+                    <field name="notes" />
+                    <notebook>
+                        <page string="Backed Up Lines">
+                            <field name="line_ids">
+                                <tree>
+                                    <field name="product_id" />
+                                    <field name="svl_id" />
+                                    <field name="quantity" />
+                                    <field name="unit_cost" />
+                                    <field name="value" />
+                                    <field name="remaining_qty" />
+                                    <field name="remaining_value" />
+                                    <field name="svl_create_date" />
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_svl_fixer_backup" model="ir.actions.act_window">
+        <field name="name">SVL Fixer Backups</field>
+        <field name="res_model">svl.fixer.backup</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- Menu Item -->
+    <menuitem id="menu_svl_fixer_backup"
+        name="SVL Fixer Backups"
+        parent="stock.menu_stock_warehouse_mgmt"
+        action="action_svl_fixer_backup"
+        sequence="102" />
+</odoo>
