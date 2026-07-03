@@ -1,0 +1,192 @@
+<section class="pt-5 pb-4">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-md-2 col-4 mb-3">
+        <img src="icon.png" class="img-fluid rounded" alt="COGS Fixer icon"/>
+      </div>
+      <div class="col-md-10 col-8">
+        <h1 style="font-weight:700;">COGS Fixer</h1>
+        <p style="font-size:17px;color:#6b7280;">
+          For products where Odoo's stock moves and journal entries have drifted apart -
+          missing entries, wrong debit/credit amounts, or COGS reports that don't add up.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="pb-5">
+  <div class="container">
+    <div class="alert alert-info" role="alert">
+      <strong>The problem this solves:</strong> after cost changes, cancelled moves, or manual stock adjustments,
+      a product's journal entries can stop matching its actual stock valuation layers (SVLs). Some SVLs end up
+      with no journal entry at all; others have one with the wrong numbers. Your COGS and inventory valuation
+      reports quietly go wrong, and nothing in the UI tells you where. COGS Fixer finds every SVL for a product,
+      checks its journal entry against what it should be, and creates or corrects it - always previewed in a dry
+      run first.
+    </div>
+  </div>
+</section>
+
+<section class="pb-5">
+  <div class="container">
+    <h2 class="mb-3" style="font-weight:700;">What it does</h2>
+    <div class="row">
+      <div class="col-md-4 col-12 mb-3">
+        <div class="card h-100 shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title" style="font-weight:700;">Dry run first</h5>
+            <p class="card-text" style="color:#6b7280;">Preview every change before anything is written to your books.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 col-12 mb-3">
+        <div class="card h-100 shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title" style="font-weight:700;">Fills in missing entries</h5>
+            <p class="card-text" style="color:#6b7280;">SVLs with no journal entry get one created, correctly balanced.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 col-12 mb-3">
+        <div class="card h-100 shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title" style="font-weight:700;">Fixes wrong entries</h5>
+            <p class="card-text" style="color:#6b7280;">Mismatched debit/credit lines get corrected to match the SVL.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 col-12 mb-3">
+        <div class="card h-100 shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title" style="font-weight:700;">Date range filter</h5>
+            <p class="card-text" style="color:#6b7280;">Target one period instead of a product's whole history.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 col-12 mb-3">
+        <div class="card h-100 shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title" style="font-weight:700;">Full change log</h5>
+            <p class="card-text" style="color:#6b7280;">Every run is logged with the exact before/after values, browsable in the UI.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 col-12 mb-3">
+        <div class="card h-100 shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title" style="font-weight:700;">CSV export</h5>
+            <p class="card-text" style="color:#6b7280;">Download a record of what changed, per SVL, for your files.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="pb-5">
+  <div class="container">
+    <h2 class="mb-3" style="font-weight:700;">See it in action</h2>
+
+    <div class="row align-items-center mb-5">
+      <div class="col-md-6 col-12 mb-3">
+        <img src="ss_wizard.png" class="img-fluid rounded shadow-sm" alt="Wizard"/>
+      </div>
+      <div class="col-md-6 col-12">
+        <h5 style="font-weight:700;">1. Pick a product and run mode</h5>
+        <p style="color:#6b7280;">Select the product, optionally set a date range, and choose dry run or live before anything happens.</p>
+      </div>
+    </div>
+
+    <div class="row align-items-center mb-5">
+      <div class="col-md-6 col-12 order-md-2 mb-3">
+        <img src="ss_dryrun.png" class="img-fluid rounded shadow-sm" alt="Dry run result"/>
+      </div>
+      <div class="col-md-6 col-12 order-md-1">
+        <h5 style="font-weight:700;">2. Preview before committing</h5>
+        <p style="color:#6b7280;">See exactly what would be created, updated, or is already correct - no changes made yet.</p>
+      </div>
+    </div>
+
+    <div class="row align-items-center mb-5">
+      <div class="col-md-6 col-12 mb-3">
+        <img src="ss_live.png" class="img-fluid rounded shadow-sm" alt="Live run result"/>
+      </div>
+      <div class="col-md-6 col-12">
+        <h5 style="font-weight:700;">3. Apply with confidence</h5>
+        <p style="color:#6b7280;">Same summary, this time with real changes committed and a backup reference you can look up later.</p>
+      </div>
+    </div>
+
+    <div class="row align-items-center mb-5">
+      <div class="col-md-6 col-12 order-md-2 mb-3">
+        <img src="ss_progress.png" class="img-fluid rounded shadow-sm" alt="Progress log"/>
+      </div>
+      <div class="col-md-6 col-12 order-md-1">
+        <h5 style="font-weight:700;">4. Full transparency</h5>
+        <p style="color:#6b7280;">A timestamped log of every step, account, and journal used during the run.</p>
+      </div>
+    </div>
+
+    <div class="row align-items-center mb-5">
+      <div class="col-md-6 col-12 mb-3">
+        <img src="ss_backups.png" class="img-fluid rounded shadow-sm" alt="Backup list"/>
+      </div>
+      <div class="col-md-6 col-12">
+        <h5 style="font-weight:700;">5. Every run is logged</h5>
+        <p style="color:#6b7280;">Browse past runs under COGS Fixer Backups, with the product and line counts for each one.</p>
+      </div>
+    </div>
+
+    <div class="row align-items-center mb-3">
+      <div class="col-md-6 col-12 order-md-2 mb-3">
+        <img src="ss_backup_detail.png" class="img-fluid rounded shadow-sm" alt="Backup detail"/>
+      </div>
+      <div class="col-md-6 col-12 order-md-1">
+        <h5 style="font-weight:700;">6. Line-level detail</h5>
+        <p style="color:#6b7280;">Exactly what each journal line looked like before the fix - account, debit, credit, all of it.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="pb-5">
+  <div class="container">
+    <div class="alert alert-warning" role="alert">
+      <strong>Please read before use:</strong> this module posts and modifies real accounting journal entries.
+      Always run in Dry Run mode first, and always test on a duplicate database before applying changes to
+      production. This is a change log, not a one-click restore - if something needs to be reverted, use the
+      log as your reference and correct it manually. Recommended for use by Odoo administrators only.
+    </div>
+  </div>
+</section>
+
+<section class="pb-5">
+  <div class="container">
+    <h2 class="mb-3" style="font-weight:700;">FAQ</h2>
+    <div class="row">
+      <div class="col-md-6 col-12 mb-3">
+        <h5 style="font-weight:700;">Does this support AVCO or other costing methods?</h5>
+        <p style="color:#6b7280;">It's built around standard costing. If your category uses a different method, review the proposed entries carefully in dry run before applying.</p>
+      </div>
+      <div class="col-md-6 col-12 mb-3">
+        <h5 style="font-weight:700;">What if a journal entry is in a locked period?</h5>
+        <p style="color:#6b7280;">Locked or reconciled entries can't be reset, so the fixer skips them and logs the specific reason instead of guessing.</p>
+      </div>
+      <div class="col-md-6 col-12 mb-3">
+        <h5 style="font-weight:700;">Can I undo a run?</h5>
+        <p style="color:#6b7280;">Every run is logged with full before/after values under COGS Fixer Backups, but there's no automatic restore. Test in a duplicate database first.</p>
+      </div>
+      <div class="col-md-6 col-12 mb-3">
+        <h5 style="font-weight:700;">Does it work on Odoo Enterprise?</h5>
+        <p style="color:#6b7280;">Yes - it only touches standard stock_account and accounting models, no Community-only dependencies.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="pb-5">
+  <div class="container text-center">
+    <p style="color:#9ca3af;font-size:13px;">Built by <strong>ScopySoft</strong> &middot; Odoo 16</p>
+  </div>
+</section>
