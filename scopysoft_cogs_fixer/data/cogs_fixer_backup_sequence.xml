@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="seq_cogs_fixer_backup" model="ir.sequence">
+        <field name="name">COGS Fixer Backup</field>
+        <field name="code">cogs.fixer.backup</field>
+        <field name="prefix">COGSBK-</field>
+        <field name="padding">5</field>
+        <field name="company_id" eval="False" />
+    </record>
+</odoo>
