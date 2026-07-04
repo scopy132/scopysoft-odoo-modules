@@ -1,587 +1,347 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>SVL Fixer – ScopySoft</title>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
-
-<style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-
-:root{
-  --navy:    #0f1729;
-  --navy2:   #1a2540;
-  --accent:  #e67e22;
-  --accent2: #f39c12;
-  --green:   #27ae60;
-  --red:     #e74c3c;
-  --white:   #ffffff;
-  --off:     #f8f9fc;
-  --border:  #e2e8f0;
-  --text:    #1e293b;
-  --muted:   #64748b;
-  --light:   #f1f5f9;
-}
-
-body{
-  font-family:'Manrope',sans-serif;
-  color:var(--text);
-  background:var(--white);
-  line-height:1.7;
-  font-size:15px;
-}
-
-.hero{
-  background:var(--navy);
-  color:#fff;
-  padding:56px 48px 52px;
-  position:relative;
-  overflow:hidden;
-}
-.hero::after{
-  content:'';
-  position:absolute;
-  top:0;right:0;bottom:0;
-  width:40%;
-  background:linear-gradient(135deg,transparent 40%,rgba(230,126,34,0.07) 100%);
-  pointer-events:none;
-}
-.hero-top{
-  display:flex;
-  align-items:center;
-  gap:12px;
-  margin-bottom:28px;
-}
-.hero-badge{
-  background:var(--accent);
-  color:#fff;
-  font-family:'Syne',sans-serif;
-  font-size:10px;
-  font-weight:700;
-  letter-spacing:0.12em;
-  text-transform:uppercase;
-  padding:5px 14px;
-  border-radius:3px;
-}
-.hero-version{
-  font-family:'Syne',sans-serif;
-  font-size:10px;
-  font-weight:600;
-  letter-spacing:0.1em;
-  text-transform:uppercase;
-  color:rgba(255,255,255,0.45);
-}
-.hero h1{
-  font-family:'Syne',sans-serif;
-  font-size:46px;
-  font-weight:800;
-  line-height:1.08;
-  max-width:660px;
-  margin-bottom:18px;
-  color:#fff;
-}
-.hero h1 span{color:var(--accent);}
-.hero-lead{
-  font-size:16px;
-  color:rgba(255,255,255,0.7);
-  max-width:600px;
-  margin-bottom:36px;
-  line-height:1.65;
-}
-.hero-pills{
-  display:flex;
-  flex-wrap:wrap;
-  gap:10px;
-}
-.pill{
-  background:rgba(255,255,255,0.07);
-  border:1px solid rgba(255,255,255,0.12);
-  color:rgba(255,255,255,0.85);
-  font-size:12px;
-  font-weight:600;
-  padding:6px 16px;
-  border-radius:20px;
-  letter-spacing:0.03em;
-}
-
-.warning-bar{
-  background:#fff3cd;
-  border-left:4px solid #e67e22;
-  padding:16px 24px;
-  font-size:13px;
-  color:#7d4e00;
-  line-height:1.6;
-}
-.warning-bar strong{font-weight:700;}
-
-section{padding:52px 48px;}
-section:nth-child(even){background:var(--off);}
-
-.section-label{
-  font-family:'Syne',sans-serif;
-  font-size:10px;
-  font-weight:700;
-  letter-spacing:0.14em;
-  text-transform:uppercase;
-  color:var(--accent);
-  margin-bottom:10px;
-}
-.section-title{
-  font-family:'Syne',sans-serif;
-  font-size:30px;
-  font-weight:800;
-  color:var(--navy);
-  margin-bottom:14px;
-  line-height:1.15;
-}
-.section-sub{
-  font-size:15px;
-  color:var(--muted);
-  max-width:580px;
-  margin-bottom:36px;
-  line-height:1.7;
-}
-
-.problem-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
-  gap:20px;
-}
-.problem-card{
-  background:var(--white);
-  border:1px solid var(--border);
-  border-radius:10px;
-  padding:24px;
-}
-.problem-card .icon{
-  font-size:24px;
-  margin-bottom:12px;
-}
-.problem-card h3{
-  font-family:'Syne',sans-serif;
-  font-size:14px;
-  font-weight:700;
-  color:var(--navy);
-  margin-bottom:8px;
-}
-.problem-card p{
-  font-size:13px;
-  color:var(--muted);
-  line-height:1.6;
-}
-
-.feature-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-  gap:20px;
-}
-.feature-card{
-  background:var(--white);
-  border:1px solid var(--border);
-  border-top:3px solid var(--accent);
-  border-radius:10px;
-  padding:24px;
-}
-.feature-card .icon{font-size:22px;margin-bottom:12px;}
-.feature-card h3{
-  font-family:'Syne',sans-serif;
-  font-size:15px;
-  font-weight:700;
-  color:var(--navy);
-  margin-bottom:8px;
-}
-.feature-card p{font-size:13px;color:var(--muted);line-height:1.6;}
-
-.how-steps{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-  gap:20px;
-  counter-reset:steps;
-}
-.step{
-  background:var(--white);
-  border:1px solid var(--border);
-  border-radius:10px;
-  padding:24px;
-  position:relative;
-}
-.step::before{
-  counter-increment:steps;
-  content:counter(steps);
-  position:absolute;
-  top:16px;right:16px;
-  font-family:'Syne',sans-serif;
-  font-size:28px;
-  font-weight:800;
-  color:var(--accent);
-  opacity:0.25;
-}
-.step h3{
-  font-family:'Syne',sans-serif;
-  font-size:14px;
-  font-weight:700;
-  color:var(--navy);
-  margin-bottom:8px;
-}
-.step p{font-size:13px;color:var(--muted);line-height:1.6;}
-
-.screenshots-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
-  gap:20px;
-}
-.screenshot-item img{
-  width:100%;
-  border:1px solid var(--border);
-  border-radius:8px;
-  display:block;
-}
-.screenshot-item .caption{
-  font-size:12px;
-  color:var(--muted);
-  margin-top:8px;
-  font-weight:600;
-}
-.screenshot-item .num{
-  display:inline-block;
-  background:var(--accent);
-  color:#fff;
-  font-size:10px;
-  font-weight:700;
-  padding:2px 8px;
-  border-radius:3px;
-  margin-right:6px;
-  font-family:'Syne',sans-serif;
-}
-
-.cost-table{
-  width:100%;
-  border-collapse:collapse;
-  font-size:14px;
-}
-.cost-table th{
-  background:var(--navy);
-  color:#fff;
-  font-family:'Syne',sans-serif;
-  font-size:11px;
-  font-weight:700;
-  letter-spacing:0.08em;
-  text-transform:uppercase;
-  padding:12px 16px;
-  text-align:left;
-}
-.cost-table td{
-  padding:12px 16px;
-  border-bottom:1px solid var(--border);
-  vertical-align:top;
-}
-.cost-table tr:last-child td{border-bottom:none;}
-.cost-table tr:nth-child(even) td{background:var(--off);}
-
-.faq-list{display:flex;flex-direction:column;gap:16px;}
-.faq-item{
-  background:var(--white);
-  border:1px solid var(--border);
-  border-radius:10px;
-  padding:28px 28px;
-}
-.faq-item h2{
-  font-family:'Syne',sans-serif;
-  font-size:19px;
-  font-weight:700;
-  color:var(--navy);
-  margin-bottom:10px;
-  line-height:1.35;
-}
-.faq-item p{font-size:14px;color:var(--muted);line-height:1.75;}
-
-.support-bar{
-  background:var(--navy);
-  color:#fff;
-  padding:36px 48px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:20px;
-  flex-wrap:wrap;
-}
-.support-bar p{font-size:14px;color:rgba(255,255,255,0.7);}
-.support-bar strong{color:#fff;font-weight:700;}
-.support-link{
-  background:var(--accent);
-  color:#fff;
-  font-family:'Syne',sans-serif;
-  font-size:12px;
-  font-weight:700;
-  letter-spacing:0.08em;
-  text-transform:uppercase;
-  padding:10px 24px;
-  border-radius:4px;
-  text-decoration:none;
-}
-
-.tag{
-  display:inline-block;
-  background:var(--light);
-  color:var(--muted);
-  font-size:11px;
-  font-weight:600;
-  padding:3px 10px;
-  border-radius:20px;
-  margin:2px;
-}
-.tag.green{background:#e8f8f0;color:#27ae60;}
-.tag.orange{background:#fef3e8;color:#e67e22;}
-</style>
-</head>
-<body>
-
-<!-- HERO -->
-<div class="hero">
-  <div class="hero-top">
-    <span class="hero-badge">ScopySoft</span>
-    <span class="hero-version">Odoo 16.0 · Inventory</span>
-  </div>
-  <h1>SVL <span>Fixer</span></h1>
-  <p class="hero-lead">
-    Your stock valuation layers have wrong quantities or costs. Odoo won't fix them automatically.
-    This module does — with dry run preview, full backup, date filtering, and one-click restore.
-  </p>
-  <div class="hero-pills">
-    <span class="pill">✓ Dry Run Mode</span>
-    <span class="pill">✓ Auto Backup &amp; Restore</span>
-    <span class="pill">✓ Date Range Filter</span>
-    <span class="pill">✓ CSV Export</span>
-    <span class="pill">✓ Batch Processing</span>
-    <span class="pill">✓ Rollback on Error</span>
-  </div>
-</div>
-
-<!-- WARNING BAR -->
-<div class="warning-bar">
-  ⚠️ <strong>Administrator Tool.</strong> This module directly modifies stock valuation layer records.
-  Always use <strong>Dry Run</strong> first. Always take a full database backup before applying changes on production.
-  Recommended for Odoo administrators and inventory managers only.
-</div>
-
-<!-- PROBLEM -->
-<section>
-  <p class="section-label">The Problem</p>
-  <h2 class="section-title">When do SVL quantities go wrong?</h2>
-  <p class="section-sub">
-    Several common Odoo scenarios leave stock valuation layers with incorrect quantities or unit costs —
-    and Odoo provides no built-in tool to correct them in bulk.
-  </p>
-  <div class="problem-grid">
-    <div class="problem-card">
-      <div class="icon">💱</div>
-      <h3>Cost Changed After Moves</h3>
-      <p>You updated standard_price on a product, but historical SVLs still reflect the old cost. Your inventory valuation is now wrong for past periods.</p>
-    </div>
-    <div class="problem-card">
-      <div class="icon">📥</div>
-      <h3>Data Migration Errors</h3>
-      <p>After migrating from another system or Odoo version, SVL quantities don't match the actual stock moves they're linked to.</p>
-    </div>
-    <div class="problem-card">
-      <div class="icon">🔧</div>
-      <h3>Manual Corrections Gone Wrong</h3>
-      <p>A previous fix attempt or manual database change left SVLs in an inconsistent state that's hard to untangle one by one.</p>
-    </div>
-    <div class="problem-card">
-      <div class="icon">📊</div>
-      <h3>Valuation Report Doesn't Match Reality</h3>
-      <p>Your inventory valuation report shows numbers that don't match what's physically in stock, with no clear audit trail of what went wrong.</p>
+<section class="pt-5 pb-4" style="background-color:#0f1729;">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-md-2 col-4 mb-3">
+        <img src="icon.png" class="img-fluid rounded" alt="SVL Fixer icon"/>
+      </div>
+      <div class="col-md-10 col-8">
+        <span style="display:inline-block;background-color:#e67e22;color:#fff;font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:4px 12px;border-radius:3px;margin-right:8px;">ScopySoft</span>
+        <span style="color:#8a92a6;font-size:11px;letter-spacing:0.08em;text-transform:uppercase;">Odoo 16.0 &middot; Inventory</span>
+        <h1 style="color:#fff;font-weight:800;margin-top:12px;">SVL <span style="color:#e67e22;">Fixer</span></h1>
+        <p style="color:#c3c8d6;font-size:16px;">
+          Your stock valuation layers have wrong quantities or costs. Odoo won't fix them automatically.
+          This module does - with dry run preview, full backup, date filtering, and one-click restore.
+        </p>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- FEATURES -->
-<section>
-  <p class="section-label">What You Get</p>
-  <h2 class="section-title">Every safety feature built in</h2>
-  <p class="section-sub">
-    This isn't just a script — it's a proper Odoo tool with UI, backup records, filters, and a CSV trail for every run.
-  </p>
-  <div class="feature-grid">
-    <div class="feature-card">
-      <div class="icon">🔍</div>
-      <h3>Dry Run Mode</h3>
-      <p>Preview exactly what will change before touching a single record. See product-by-product: SVLs found, value delta, final value — all without writing anything.</p>
-    </div>
-    <div class="feature-card">
-      <div class="icon">💾</div>
-      <h3>Proper Backup Model</h3>
-      <p>Every run creates a named backup record (SVLBK-00001, etc.) with the full before-state of every SVL line. Browse backups in the UI — no database access needed.</p>
-    </div>
-    <div class="feature-card">
-      <div class="icon">↩️</div>
-      <h3>One-Click Restore</h3>
-      <p>Made a mistake? Open any backup record and click "Restore This Backup" to revert exactly those SVL lines to their pre-fix values. Real undo, not just a table.</p>
-    </div>
-    <div class="feature-card">
-      <div class="icon">📅</div>
-      <h3>Date Range Filter</h3>
-      <p>Limit the fix to SVLs created within a specific date window. Fix last month's problem without touching records from two years ago.</p>
-    </div>
-    <div class="feature-card">
-      <div class="icon">💰</div>
-      <h3>Cost Source Choice</h3>
-      <p>Apply the product's current standard_price uniformly, or enter a custom cost manually for cases where the product price isn't what you want to backfill.</p>
-    </div>
-    <div class="feature-card">
-      <div class="icon">📤</div>
-      <h3>CSV Export</h3>
-      <p>Every run generates a downloadable CSV with SVL ID, product, old quantity, new quantity, old value, new value, and value delta. Keep a paper trail per fix.</p>
-    </div>
-    <div class="feature-card">
-      <div class="icon">⚙️</div>
-      <h3>Min Unit Cost Threshold</h3>
-      <p>Skip SVLs where the unit cost difference is below your set threshold. Useful on large catalogs where you only care about meaningful discrepancies.</p>
-    </div>
-    <div class="feature-card">
-      <div class="icon">🔄</div>
-      <h3>Batch Processing</h3>
-      <p>Configurable batch size with mid-run commits. Process thousands of SVLs safely without memory issues or timeouts on large databases.</p>
+<section class="pb-4" style="background-color:#fff3cd;border-left:4px solid #e67e22;">
+  <div class="container">
+    <p class="pt-3 pb-3" style="color:#7d4e00;margin-bottom:0;">
+      <strong>Administrator Tool.</strong> This module directly modifies stock valuation layer records.
+      Always use <strong>Dry Run</strong> first. Always take a full database backup before applying changes on
+      production. Recommended for Odoo administrators and inventory managers only.
+    </p>
+  </div>
+</section>
+
+<section class="pt-5 pb-4">
+  <div class="container">
+    <p style="color:#e67e22;font-weight:700;font-size:12px;letter-spacing:0.1em;text-transform:uppercase;">The Problem</p>
+    <h2 class="mb-3" style="font-weight:800;">When do SVL quantities go wrong?</h2>
+    <p class="mb-4" style="color:#6b7280;max-width:620px;">
+      Several common Odoo scenarios leave stock valuation layers with incorrect quantities or unit costs -
+      and Odoo provides no built-in tool to correct them in bulk.
+    </p>
+    <div class="row">
+      <div class="col-md-6 col-12 mb-3">
+        <div class="card h-100 shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title" style="font-weight:700;">Cost Changed After Moves</h5>
+            <p class="card-text" style="color:#6b7280;">You updated standard_price on a product, but historical SVLs still reflect the old cost. Your inventory valuation is now wrong for past periods.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-12 mb-3">
+        <div class="card h-100 shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title" style="font-weight:700;">Data Migration Errors</h5>
+            <p class="card-text" style="color:#6b7280;">After migrating from another system or Odoo version, SVL quantities don't match the actual stock moves they're linked to.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-12 mb-3">
+        <div class="card h-100 shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title" style="font-weight:700;">Manual Corrections Gone Wrong</h5>
+            <p class="card-text" style="color:#6b7280;">A previous fix attempt or manual database change left SVLs in an inconsistent state that's hard to untangle one by one.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-12 mb-3">
+        <div class="card h-100 shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title" style="font-weight:700;">Valuation Report Doesn't Match Reality</h5>
+            <p class="card-text" style="color:#6b7280;">Your inventory valuation report shows numbers that don't match what's physically in stock, with no clear audit trail of what went wrong.</p>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- HOW TO USE -->
-<section>
-  <p class="section-label">How It Works</p>
-  <h2 class="section-title">Recommended workflow</h2>
-  <p class="section-sub">Follow these steps to fix SVLs safely on any database.</p>
-  <div class="how-steps">
-    <div class="step">
-      <h3>Update the Product Cost</h3>
-      <p>Set the product's cost field to the correct value you want applied to historical SVLs. Changing cost on the product form alone only creates a new forward-looking SVL — it leaves old ones wrong.</p>
-    </div>
-    <div class="step">
-      <h3>Open the Fixer Wizard</h3>
-      <p>Go to Inventory → Operations → Fix SVL Quantities. Select your products, set date range if needed.</p>
-    </div>
-    <div class="step">
-      <h3>Run Dry Run First</h3>
-      <p>Tick "Dry Run (Preview Only)" and click Run Fixer. Review the summary table — products affected, value delta per product, final values. Confirm it's what you expect.</p>
-    </div>
-    <div class="step">
-      <h3>Apply the Fix</h3>
-      <p>Untick Dry Run and run again. The module creates a backup, applies changes in batches, and shows a live results table. Errors trigger automatic rollback.</p>
-    </div>
-    <div class="step">
-      <h3>Download CSV &amp; Verify</h3>
-      <p>Download the CSV report for your records. Check your inventory valuation report to confirm the numbers now match expectations.</p>
-    </div>
-    <div class="step">
-      <h3>Restore If Needed</h3>
-      <p>If anything looks wrong, go to Inventory → Configuration → SVL Fixer Backups, open the backup from your run, and click Restore This Backup.</p>
-    </div>
-  </div>
-</section>
-
-<!-- COST SOURCE TABLE -->
-<section>
-  <p class="section-label">Cost Source</p>
-  <h2 class="section-title">Two modes for different situations</h2>
-  <p class="section-sub">Choose the right cost source for your specific problem.</p>
-  <table class="cost-table">
-    <thead>
-      <tr>
-        <th>Mode</th>
-        <th>When to Use</th>
-        <th>How It Works</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><strong>Use Current Product Cost</strong></td>
-        <td>Your SVLs are out of sync with the product's current standard_price. You want to realign all historical SVLs to match today's cost.</td>
-        <td>Reads <code>standard_price</code> from the product form and applies it to all matching SVLs in the selected date range.</td>
-      </tr>
-      <tr>
-        <td><strong>Enter a Custom Cost Manually</strong></td>
-        <td>You know the specific correct historical cost, but the current product price is different or unrelated to the mistake you're fixing.</td>
-        <td>You type in the cost value directly. That exact value is applied to all matching SVLs — ignoring whatever is on the product form.</td>
-      </tr>
-    </tbody>
-  </table>
-</section>
-
-<!-- SCREENSHOTS -->
-<section>
-  <p class="section-label">See It In Action</p>
-  <h2 class="section-title">Real screenshots from a live database</h2>
-  <p class="section-sub">No mockups. No demo data fabricated for this listing.</p>
-  <div class="screenshots-grid">
-    <div class="screenshot-item">
-      <img src="ss_wizard.png" alt="SVL Fixer wizard main screen"/>
-      <p class="caption"><span class="num">01</span> Wizard — product selection, cost source, date range, dry run toggle</p>
-    </div>
-    <div class="screenshot-item">
-      <img src="ss_dryrun.png" alt="Dry run summary result"/>
-      <p class="caption"><span class="num">02</span> Dry Run result — full summary before any changes are made</p>
-    </div>
-    <div class="screenshot-item">
-      <img src="ss_results.png" alt="Live run results with changes applied"/>
-      <p class="caption"><span class="num">03</span> Live run — per-product table with value deltas and confirmation</p>
-    </div>
-    <div class="screenshot-item">
-      <img src="ss_backups.png" alt="SVL Fixer Backups list view"/>
-      <p class="caption"><span class="num">04</span> Backup list — every run tracked with reference, date, products affected</p>
-    </div>
-    <div class="screenshot-item">
-      <img src="ss_restore.png" alt="Restore backup confirmation"/>
-      <p class="caption"><span class="num">05</span> Restore — one-click revert with full before-state per SVL line</p>
-    </div>
-    <div class="screenshot-item">
-      <img src="ss_csv.png" alt="CSV export in spreadsheet"/>
-      <p class="caption"><span class="num">06</span> CSV export — downloadable report for every run</p>
+<section class="pt-5 pb-4" style="background-color:#f8f9fc;">
+  <div class="container">
+    <p style="color:#e67e22;font-weight:700;font-size:12px;letter-spacing:0.1em;text-transform:uppercase;">What You Get</p>
+    <h2 class="mb-3" style="font-weight:800;">Every safety feature built in</h2>
+    <p class="mb-4" style="color:#6b7280;max-width:620px;">
+      This isn't just a script - it's a proper Odoo tool with UI, backup records, filters, and a CSV trail for every run.
+    </p>
+    <div class="row">
+      <div class="col-md-4 col-12 mb-3">
+        <div class="card h-100 shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title" style="font-weight:700;">Dry Run Mode</h5>
+            <p class="card-text" style="color:#6b7280;">Preview exactly what will change before touching a single record - product by product, with value delta and final value.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 col-12 mb-3">
+        <div class="card h-100 shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title" style="font-weight:700;">Proper Backup Model</h5>
+            <p class="card-text" style="color:#6b7280;">Every run creates a named backup record with the full before-state of every SVL line. Browse backups in the UI - no database access needed.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 col-12 mb-3">
+        <div class="card h-100 shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title" style="font-weight:700;">One-Click Restore</h5>
+            <p class="card-text" style="color:#6b7280;">Made a mistake? Open any backup record and click "Restore This Backup" to revert exactly those SVL lines. Real undo, not just a table.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 col-12 mb-3">
+        <div class="card h-100 shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title" style="font-weight:700;">Date Range Filter</h5>
+            <p class="card-text" style="color:#6b7280;">Limit the fix to SVLs created within a specific date window. Fix last month's problem without touching older records.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 col-12 mb-3">
+        <div class="card h-100 shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title" style="font-weight:700;">Cost Source Choice</h5>
+            <p class="card-text" style="color:#6b7280;">Apply the product's current standard_price uniformly, or enter a custom cost manually for cases where the product price isn't what you want to backfill.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 col-12 mb-3">
+        <div class="card h-100 shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title" style="font-weight:700;">CSV Export</h5>
+            <p class="card-text" style="color:#6b7280;">Every run generates a downloadable CSV with SVL ID, product, old/new quantity, old/new value, and value delta.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 col-12 mb-3">
+        <div class="card h-100 shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title" style="font-weight:700;">Min Unit Cost Threshold</h5>
+            <p class="card-text" style="color:#6b7280;">Skip SVLs where the unit cost difference is below your set threshold - useful on large catalogs to ignore rounding noise.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 col-12 mb-3">
+        <div class="card h-100 shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title" style="font-weight:700;">Batch Processing</h5>
+            <p class="card-text" style="color:#6b7280;">Configurable batch size with mid-run commits. Process thousands of SVLs safely without timeouts.</p>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- FAQ -->
-<section>
-  <p class="section-label">FAQ</p>
-  <h2 class="section-title">Common questions</h2>
-  <div class="faq-list">
-    <div class="faq-item">
-      <h2>Does this work with AVCO (average cost) products?</h2>
-      <p>The module is designed primarily for Standard Cost products. For AVCO products, the correct cost at any point in time depends on the sequence of receipts — applying a single uniform cost to all historical SVLs will produce incorrect average cost calculations. Use with caution on AVCO products and always run Dry Run first.</p>
+<section class="pt-5 pb-4">
+  <div class="container">
+    <p style="color:#e67e22;font-weight:700;font-size:12px;letter-spacing:0.1em;text-transform:uppercase;">How It Works</p>
+    <h2 class="mb-3" style="font-weight:800;">Recommended workflow</h2>
+    <p class="mb-4" style="color:#6b7280;max-width:620px;">Follow these steps to fix SVLs safely on any database.</p>
+    <div class="row">
+      <div class="col-md-4 col-12 mb-3">
+        <div class="card h-100 shadow-sm">
+          <div class="card-body">
+            <p style="color:#e67e22;font-weight:800;font-size:22px;margin-bottom:6px;">01</p>
+            <h5 class="card-title" style="font-weight:700;">Update the Product Cost</h5>
+            <p class="card-text" style="color:#6b7280;">Set the product's cost field to the correct value you want applied to historical SVLs.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 col-12 mb-3">
+        <div class="card h-100 shadow-sm">
+          <div class="card-body">
+            <p style="color:#e67e22;font-weight:800;font-size:22px;margin-bottom:6px;">02</p>
+            <h5 class="card-title" style="font-weight:700;">Open the Fixer Wizard</h5>
+            <p class="card-text" style="color:#6b7280;">Go to Inventory &rarr; Operations &rarr; Fix SVL Quantities. Select your products, set a date range if needed.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 col-12 mb-3">
+        <div class="card h-100 shadow-sm">
+          <div class="card-body">
+            <p style="color:#e67e22;font-weight:800;font-size:22px;margin-bottom:6px;">03</p>
+            <h5 class="card-title" style="font-weight:700;">Run Dry Run First</h5>
+            <p class="card-text" style="color:#6b7280;">Tick "Dry Run" and click Run Fixer. Review the summary table before anything is written.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 col-12 mb-3">
+        <div class="card h-100 shadow-sm">
+          <div class="card-body">
+            <p style="color:#e67e22;font-weight:800;font-size:22px;margin-bottom:6px;">04</p>
+            <h5 class="card-title" style="font-weight:700;">Apply the Fix</h5>
+            <p class="card-text" style="color:#6b7280;">Untick Dry Run and run again. A backup is created, changes apply in batches, and errors trigger automatic rollback.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 col-12 mb-3">
+        <div class="card h-100 shadow-sm">
+          <div class="card-body">
+            <p style="color:#e67e22;font-weight:800;font-size:22px;margin-bottom:6px;">05</p>
+            <h5 class="card-title" style="font-weight:700;">Download CSV &amp; Verify</h5>
+            <p class="card-text" style="color:#6b7280;">Download the CSV report for your records, then confirm your valuation report now matches expectations.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 col-12 mb-3">
+        <div class="card h-100 shadow-sm">
+          <div class="card-body">
+            <p style="color:#e67e22;font-weight:800;font-size:22px;margin-bottom:6px;">06</p>
+            <h5 class="card-title" style="font-weight:700;">Restore If Needed</h5>
+            <p class="card-text" style="color:#6b7280;">If anything looks wrong, open the backup from your run under SVL Fixer Backups and click Restore.</p>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="faq-item">
-      <h2>Will this affect my accounting journal entries?</h2>
-      <p>The module modifies SVL records directly. It does not automatically create new journal entries to match. If your SVLs are linked to posted accounting moves, your inventory valuation and GL may diverge. This is an administrator tool — review your accounting impact after any fix.</p>
-    </div>
-    <div class="faq-item">
-      <h2>What does "Dry Run" actually do?</h2>
-      <p>Dry Run reads all the SVLs, calculates what changes would be made, and shows you the full summary table — without writing a single record. No backup is created in Dry Run mode. It is purely read-only.</p>
-    </div>
-    <div class="faq-item">
-      <h2>What happens if the run fails partway through?</h2>
-      <p>The module uses transaction rollback on errors. If an exception occurs, all changes from that batch are rolled back. The backup record from before the run remains intact so you can restore the pre-run state manually.</p>
-    </div>
-    <div class="faq-item">
-      <h2>Can I fix only SVLs from a specific period?</h2>
-      <p>Yes. Use the From Date and To Date fields to filter by SVL creation date. Only SVLs created within that window will be processed. Older or newer records are untouched.</p>
-    </div>
-    <div class="faq-item">
-      <h2>What is the Min Unit Cost Change to Report field?</h2>
-      <p>This skips SVLs where the difference between the current unit cost and the correct cost is below your set amount. Useful on large catalogs to ignore rounding differences and focus only on meaningful discrepancies.</p>
-    </div>
-    <div class="faq-item">
-      <h2>Does it track historical cost at the time of each move?</h2>
-      <p>No. The module applies one cost uniformly to all selected SVLs — either the current product standard_price or a manually entered value. It does not reconstruct what the cost was at the time of each individual move. For that level of historical reconstruction, you would need to manually specify cost per move.</p>
-    </div>
-    
   </div>
 </section>
 
+<section class="pt-5 pb-4" style="background-color:#f8f9fc;">
+  <div class="container">
+    <p style="color:#e67e22;font-weight:700;font-size:12px;letter-spacing:0.1em;text-transform:uppercase;">Cost Source</p>
+    <h2 class="mb-3" style="font-weight:800;">Two modes for different situations</h2>
+    <p class="mb-4" style="color:#6b7280;max-width:620px;">Choose the right cost source for your specific problem.</p>
+    <table class="table table-bordered">
+      <thead>
+        <tr style="background-color:#0f1729;color:#fff;">
+          <th>Mode</th>
+          <th>When to Use</th>
+          <th>How It Works</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Use Current Product Cost</strong></td>
+          <td>Your SVLs are out of sync with the product's current standard_price. You want to realign all historical SVLs to match today's cost.</td>
+          <td>Reads <code>standard_price</code> from the product form and applies it to all matching SVLs in the selected date range.</td>
+        </tr>
+        <tr>
+          <td><strong>Enter a Custom Cost Manually</strong></td>
+          <td>You know the specific correct historical cost, but the current product price is different or unrelated to the mistake you're fixing.</td>
+          <td>You type in the cost value directly. That exact value is applied to all matching SVLs - ignoring whatever is on the product form.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
 
-  <a class="support-link" href="https://apps.odoo.com/apps/modules?author=ScopySoft">More by ScopySoft →</a>
-</div>
+<section class="pt-5 pb-4">
+  <div class="container">
+    <p style="color:#e67e22;font-weight:700;font-size:12px;letter-spacing:0.1em;text-transform:uppercase;">See It In Action</p>
+    <h2 class="mb-3" style="font-weight:800;">Real screenshots from a live database</h2>
+    <p class="mb-4" style="color:#6b7280;max-width:620px;">No mockups. No demo data fabricated for this listing.</p>
+    <div class="row">
+      <div class="col-md-6 col-12 mb-4">
+        <img src="ss_wizard.png" class="img-fluid rounded shadow-sm" alt="SVL Fixer wizard main screen"/>
+        <p class="mt-2" style="font-size:12px;color:#6b7280;font-weight:600;">01 &middot; Wizard - product selection, cost source, date range, dry run toggle</p>
+      </div>
+      <div class="col-md-6 col-12 mb-4">
+        <img src="ss_dryrun.png" class="img-fluid rounded shadow-sm" alt="Dry run summary result"/>
+        <p class="mt-2" style="font-size:12px;color:#6b7280;font-weight:600;">02 &middot; Dry Run result - full summary before any changes are made</p>
+      </div>
+      <div class="col-md-6 col-12 mb-4">
+        <img src="ss_results.png" class="img-fluid rounded shadow-sm" alt="Live run results with changes applied"/>
+        <p class="mt-2" style="font-size:12px;color:#6b7280;font-weight:600;">03 &middot; Live run - per-product table with value deltas and confirmation</p>
+      </div>
+      <div class="col-md-6 col-12 mb-4">
+        <img src="ss_backups.png" class="img-fluid rounded shadow-sm" alt="SVL Fixer Backups list view"/>
+        <p class="mt-2" style="font-size:12px;color:#6b7280;font-weight:600;">04 &middot; Backup list - every run tracked with reference, date, products affected</p>
+      </div>
+      <div class="col-md-6 col-12 mb-4">
+        <img src="ss_restore.png" class="img-fluid rounded shadow-sm" alt="Restore backup confirmation"/>
+        <p class="mt-2" style="font-size:12px;color:#6b7280;font-weight:600;">05 &middot; Restore - one-click revert with full before-state per SVL line</p>
+      </div>
+      <div class="col-md-6 col-12 mb-4">
+        <img src="ss_csv.png" class="img-fluid rounded shadow-sm" alt="CSV export in spreadsheet"/>
+        <p class="mt-2" style="font-size:12px;color:#6b7280;font-weight:600;">06 &middot; CSV export - downloadable report for every run</p>
+      </div>
+    </div>
+  </div>
+</section>
 
-</body>
-</html>
+<section class="pt-5 pb-5" style="background-color:#f8f9fc;">
+  <div class="container">
+    <p style="color:#e67e22;font-weight:700;font-size:12px;letter-spacing:0.1em;text-transform:uppercase;">FAQ</p>
+    <h2 class="mb-4" style="font-weight:800;">Common questions</h2>
+    <div class="row">
+      <div class="col-md-6 col-12 mb-3">
+        <div class="card h-100 shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title" style="font-weight:700;">Does this work with AVCO (average cost) products?</h5>
+            <p class="card-text" style="color:#6b7280;">Designed primarily for Standard Cost products. For AVCO, the correct cost at any point depends on the sequence of receipts - applying one uniform cost to all historical SVLs will produce incorrect average cost calculations. Use with caution and always run Dry Run first.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-12 mb-3">
+        <div class="card h-100 shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title" style="font-weight:700;">Will this affect my accounting journal entries?</h5>
+            <p class="card-text" style="color:#6b7280;">The module modifies SVL records directly and does not automatically create matching journal entries. If your SVLs are linked to posted accounting moves, your inventory valuation and GL may diverge - review the accounting impact after any fix.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-12 mb-3">
+        <div class="card h-100 shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title" style="font-weight:700;">What does "Dry Run" actually do?</h5>
+            <p class="card-text" style="color:#6b7280;">Reads all the SVLs, calculates what changes would be made, and shows the full summary - without writing a single record. No backup is created in Dry Run mode; it's purely read-only.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-12 mb-3">
+        <div class="card h-100 shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title" style="font-weight:700;">What happens if the run fails partway through?</h5>
+            <p class="card-text" style="color:#6b7280;">Transaction rollback applies on errors - if an exception occurs, that batch's changes roll back. The backup record from before the run stays intact so you can restore the pre-run state.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-12 mb-3">
+        <div class="card h-100 shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title" style="font-weight:700;">Can I fix only SVLs from a specific period?</h5>
+            <p class="card-text" style="color:#6b7280;">Yes - use the From Date and To Date fields to filter by SVL creation date. Only SVLs created within that window are processed; older or newer records are untouched.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-12 mb-3">
+        <div class="card h-100 shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title" style="font-weight:700;">What is the Min Unit Cost Change to Report field?</h5>
+            <p class="card-text" style="color:#6b7280;">Skips SVLs where the difference between the current unit cost and the correct cost is below your set amount - useful on large catalogs to ignore rounding differences.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-12 mb-3">
+        <div class="card h-100 shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title" style="font-weight:700;">Does it track historical cost at the time of each move?</h5>
+            <p class="card-text" style="color:#6b7280;">No - the module applies one cost uniformly to all selected SVLs, either the current standard_price or a manually entered value. It does not reconstruct what the cost was at the time of each individual move.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="pb-4">
+  <div class="container text-center">
+    <p style="color:#9ca3af;font-size:13px;">Built by <strong>ScopySoft</strong> &middot; Odoo 16</p>
+  </div>
+</section>
