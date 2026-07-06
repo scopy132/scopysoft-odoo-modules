@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Add low stock alert banner and threshold field to product template form -->
+    <record id="view_product_template_low_stock_alert" model="ir.ui.view">
+        <field name="name">product.template.low.stock.alert</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_only_form_view"/>
+        <field name="arch" type="xml">
+
+            <!-- Alert banner at top of form -->
+            <xpath expr="//sheet" position="before">
+                <div class="alert alert-warning alert-dismissible o_low_stock_alert"
+                     attrs="{'invisible': [('is_low_stock', '=', False)]}"
+                     style="margin:0;border-radius:0;border-left:4px solid #f59e0b;">
+                    <i class="fa fa-exclamation-triangle me-2"/>
+                    <field name="stock_alert_message" readonly="1" nolabel="1"/>
+                </div>
+            </xpath>
+
+            <!-- Add threshold field in Inventory tab -->
+            <xpath expr="//page[@name='general_information']" position="after">
+                <page string="Stock Alert" name="stock_alert">
+                    <group>
+                        <group string="Low Stock Settings">
+                            <field name="low_stock_threshold"
+                                   attrs="{'invisible': [('type', 'not in', ['product', 'consu'])]}"/>
+                            <field name="is_low_stock" invisible="1"/>
+                            <field name="qty_available" readonly="1"
+                                   attrs="{'invisible': [('type', 'not in', ['product', 'consu'])]}"/>
+                        </group>
+                    </group>
+                    <div class="text-muted mt-2" style="font-size:13px;">
+                        Set a Low Stock Threshold greater than 0 to activate the alert.
+                        When stock on hand falls at or below this number, a warning banner
+                        will appear at the top of this product form.
+                    </div>
+                </page>
+            </xpath>
+
+        </field>
+    </record>
+
+</odoo>

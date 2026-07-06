@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_low_stock_products_list" model="ir.ui.view">
+        <field name="name">product.template.low.stock.list</field>
+        <field name="model">product.template</field>
+        <field name="arch" type="xml">
+            <tree string="Low Stock Products" create="false" delete="false"
+                  decoration-danger="qty_available == 0"
+                  decoration-warning="qty_available &gt; 0 and qty_available &lt;= low_stock_threshold">
+                <field name="name" string="Product"/>
+                <field name="default_code" string="Reference" optional="show"/>
+                <field name="categ_id" string="Category" optional="show"/>
+                <field name="qty_available" string="On Hand"/>
+                <field name="low_stock_threshold" string="Threshold"/>
+                <field name="uom_id" string="Unit"/>
+                <field name="is_low_stock" invisible="1"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_low_stock_products_search" model="ir.ui.view">
+        <field name="name">product.template.low.stock.search</field>
+        <field name="model">product.template</field>
+        <field name="arch" type="xml">
+            <search string="Low Stock Products">
+                <field name="name" string="Product"/>
+                <field name="default_code" string="Reference"/>
+                <field name="categ_id" string="Category"/>
+                <filter string="Out of Stock" name="out_of_stock"
+                        domain="[('qty_available', '=', 0)]"/>
+                <group expand="1" string="Group By">
+                    <filter string="Category" name="group_category"
+                            context="{'group_by': 'categ_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_low_stock_products" model="ir.actions.act_window">
+        <field name="name">Low Stock Products</field>
+        <field name="res_model">product.template</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="view_low_stock_products_list"/>
+        <field name="search_view_id" ref="view_low_stock_products_search"/>
+        <field name="domain">[
+            ('type', 'in', ['product', 'consu']),
+            ('low_stock_threshold', '&gt;', 0),
+            ('is_low_stock', '=', True)
+        ]</field>
+        <field name="context">{'search_default_out_of_stock': 0}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No low stock alerts set up yet
+            </p>
+            <p>
+                Open any product, go to the Stock Alert tab,
+                and set a Low Stock Threshold to start monitoring.
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="menu_low_stock_products"
+              name="Low Stock Products"
+              parent="stock.menu_stock_root"
+              action="action_low_stock_products"
+              sequence="99"/>
+
+</odoo>

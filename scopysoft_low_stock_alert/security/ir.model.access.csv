@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_low_stock_digest_user,low.stock.digest.user,model_low_stock_digest,base.group_user,1,1,1,1

@@ -1,0 +1,177 @@
+<section class="pt-5 pb-4" style="background-color:#12192b;">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-md-2 col-4 mb-3">
+        <img src="icon.png" class="img-fluid rounded" alt="Low Stock Alert icon"/>
+      </div>
+      <div class="col-md-10 col-8">
+        <span style="display:inline-block;background-color:#22c55e;color:#fff;font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:4px 12px;border-radius:3px;margin-right:8px;">Free</span>
+        <span style="color:#8a92a6;font-size:11px;letter-spacing:0.08em;text-transform:uppercase;">Odoo 16.0 &middot; Inventory</span>
+        <h1 style="color:#fff;font-weight:800;margin-top:12px;">Low Stock Alert</h1>
+        <p style="color:#c3c8d6;font-size:16px;">
+          Know a product is running low before you're already out of stock - on the product form,
+          on the sales order, and in a daily digest email if you want one.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="pb-4 pt-4">
+  <div class="container">
+    <div class="alert alert-info" role="alert">
+      <strong>The problem this solves:</strong> Odoo's default inventory views don't warn you when a product
+      is about to run out until it's already at zero and an order is stuck. This module adds a simple
+      per-product threshold - once on-hand quantity drops to or below it, a visible warning shows up
+      everywhere it matters, including before a salesperson confirms an order for something you don't have enough of.
+    </div>
+  </div>
+</section>
+
+<section class="pt-4 pb-4">
+  <div class="container">
+    <h2 class="mb-3" style="font-weight:700;">What it does</h2>
+    <div class="row">
+      <div class="col-md-4 col-12 mb-3">
+        <div class="card h-100 shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title" style="font-weight:700;">Product form banner</h5>
+            <p class="card-text" style="color:#6b7280;">A clear warning appears at the top of the product form the moment on-hand quantity hits your threshold.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 col-12 mb-3">
+        <div class="card h-100 shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title" style="font-weight:700;">Sales order warning</h5>
+            <p class="card-text" style="color:#6b7280;">Adding a low-stock product to a quotation shows a pop-up warning - advisory only, it won't block the sale.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 col-12 mb-3">
+        <div class="card h-100 shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title" style="font-weight:700;">Low Stock Products list</h5>
+            <p class="card-text" style="color:#6b7280;">One dedicated view under Inventory shows every product currently at or below its threshold.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 col-12 mb-3">
+        <div class="card h-100 shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title" style="font-weight:700;">Optional daily digest</h5>
+            <p class="card-text" style="color:#6b7280;">Turn on a daily email summarizing every low-stock product, sent to whoever you choose.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 col-12 mb-3">
+        <div class="card h-100 shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title" style="font-weight:700;">Per-product threshold</h5>
+            <p class="card-text" style="color:#6b7280;">Set your own threshold per product. Leave it at 0 to leave that product out of the alerts entirely.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 col-12 mb-3">
+        <div class="card h-100 shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title" style="font-weight:700;">Storable &amp; consumable</h5>
+            <p class="card-text" style="color:#6b7280;">Works on both storable and consumable product types - service products are correctly excluded.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="pt-4 pb-4" style="background-color:#f8f9fc;">
+  <div class="container">
+    <h2 class="mb-4" style="font-weight:700;">See it in action</h2>
+
+    <div class="row align-items-center mb-5">
+      <div class="col-md-6 col-12 mb-3">
+        <img src="ss_alert_banner.png" class="img-fluid rounded shadow-sm" alt="Product form low stock banner"/>
+      </div>
+      <div class="col-md-6 col-12">
+        <h5 style="font-weight:700;">Right on the product form</h5>
+        <p style="color:#6b7280;">Set a Low Stock Threshold under the Stock Alert tab, and a warning banner shows automatically once on-hand drops to that level.</p>
+      </div>
+    </div>
+
+    <div class="row align-items-center mb-5">
+      <div class="col-md-6 col-12 order-md-2 mb-3">
+        <img src="ss_sale_warning.png" class="img-fluid rounded shadow-sm" alt="Sales order low stock warning"/>
+      </div>
+      <div class="col-md-6 col-12 order-md-1">
+        <h5 style="font-weight:700;">Caught before you confirm the order</h5>
+        <p style="color:#6b7280;">Adding a low-stock product to a quotation pops up a warning - it tells you, but doesn't stop you, in case you have a valid reason to proceed.</p>
+      </div>
+    </div>
+
+    <div class="row align-items-center mb-5">
+      <div class="col-md-6 col-12 mb-3">
+        <img src="ss_list.png" class="img-fluid rounded shadow-sm" alt="Low Stock Products list"/>
+      </div>
+      <div class="col-md-6 col-12">
+        <h5 style="font-weight:700;">One list, everything low</h5>
+        <p style="color:#6b7280;">Under Inventory, a dedicated Low Stock Products menu shows every monitored product currently at or below threshold.</p>
+      </div>
+    </div>
+
+    <div class="row align-items-center mb-3">
+      <div class="col-md-6 col-12 order-md-2 mb-3">
+        <img src="ss_settings.png" class="img-fluid rounded shadow-sm" alt="Daily low stock digest settings"/>
+      </div>
+      <div class="col-md-6 col-12 order-md-1">
+        <h5 style="font-weight:700;">Optional daily email</h5>
+        <p style="color:#6b7280;">Turn on the daily digest under Inventory settings and add recipient emails - it only sends if there's actually something low, and needs an outgoing mail server configured.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="pt-4 pb-5">
+  <div class="container">
+    <h2 class="mb-4" style="font-weight:700;">FAQ</h2>
+    <div class="row">
+      <div class="col-md-6 col-12 mb-3">
+        <div class="card h-100 shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title" style="font-weight:700;">Does this work on consumable products, or only storable ones?</h5>
+            <p class="card-text" style="color:#6b7280;">Both. Storable and consumable products are monitored; service-type products are excluded since they don't carry a real on-hand quantity.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-12 mb-3">
+        <div class="card h-100 shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title" style="font-weight:700;">Does the sales order warning block the sale?</h5>
+            <p class="card-text" style="color:#6b7280;">No - it's advisory only. You can still confirm the order; the warning just makes sure you're aware before you do.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-12 mb-3">
+        <div class="card h-100 shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title" style="font-weight:700;">What if I don't want alerts on a specific product?</h5>
+            <p class="card-text" style="color:#6b7280;">Leave its Low Stock Threshold at 0 (the default). Alerts only activate once you set a threshold above zero.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-12 mb-3">
+        <div class="card h-100 shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title" style="font-weight:700;">Why isn't the daily digest email sending?</h5>
+            <p class="card-text" style="color:#6b7280;">Check that it's enabled under Inventory settings, recipients are set, and you have an outgoing mail server configured under Settings &gt; Technical &gt; Email.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="pb-4">
+  <div class="container text-center">
+    <p style="color:#9ca3af;font-size:13px;">Built by <strong>ScopySoft</strong> &middot; Odoo 16 &middot; Free</p>
+  </div>
+</section>

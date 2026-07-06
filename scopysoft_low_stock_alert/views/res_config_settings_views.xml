@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_res_config_settings_low_stock" model="ir.ui.view">
+        <field name="name">res.config.settings.low.stock.alert</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="stock.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[hasclass('app_settings_block')][@data-key='stock']" position="inside">
+                <h2>Low Stock Digest</h2>
+                <div class="row mt16 o_settings_container" id="low_stock_digest_setting_container">
+                    <div class="col-12 col-lg-6 o_setting_box">
+                        <div class="o_setting_left_pane">
+                            <field name="low_stock_digest_enabled"/>
+                        </div>
+                        <div class="o_setting_right_pane">
+                            <label for="low_stock_digest_enabled" string="Daily Low Stock Email"/>
+                            <div class="text-muted">
+                                Sends a daily email summary of products at or below their
+                                threshold. Requires an outgoing mail server under
+                                Settings &gt; Technical &gt; Email.
+                            </div>
+                            <div class="content-group" attrs="{'invisible': [('low_stock_digest_enabled', '=', False)]}">
+                                <field name="low_stock_digest_recipients"
+                                       placeholder="e.g. manager@company.com, warehouse@company.com"
+                                       class="o_light_label mt8"/>
+                                <div class="text-muted" style="font-size:12px;">
+                                    Comma-separated email addresses. If no outgoing mail server
+                                    is configured, this digest will simply not send.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
