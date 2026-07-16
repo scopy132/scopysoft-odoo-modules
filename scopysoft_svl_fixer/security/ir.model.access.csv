@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_svl_fixer_wizard_user,access.svl.fixer.wizard.user,model_svl_fixer_wizard,stock.group_stock_user,1,1,1,1
+access_svl_fixer_wizard_manager,access.svl.fixer.wizard.manager,model_svl_fixer_wizard,stock.group_stock_manager,1,1,1,1
+access_svl_fixer_backup_user,access.svl.fixer.backup.user,model_svl_fixer_backup,stock.group_stock_user,1,0,0,0
+access_svl_fixer_backup_manager,access.svl.fixer.backup.manager,model_svl_fixer_backup,stock.group_stock_manager,1,1,1,1
+access_svl_fixer_backup_line_user,access.svl.fixer.backup.line.user,model_svl_fixer_backup_line,stock.group_stock_user,1,0,0,0
+access_svl_fixer_backup_line_manager,access.svl.fixer.backup.line.manager,model_svl_fixer_backup_line,stock.group_stock_manager,1,1,1,1
