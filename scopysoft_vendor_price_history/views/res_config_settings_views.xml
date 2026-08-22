@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Settings UI intentionally omitted pending view structure verification.
+         The alert threshold defaults to 15% via ir.config_parameter. -->
+</odoo>
