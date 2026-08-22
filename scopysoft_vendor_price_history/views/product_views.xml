@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Add smart button to product template form -->
+    <record id="view_product_template_vendor_price_history" model="ir.ui.view">
+        <field name="name">product.template.vendor.price.history</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_only_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="action_view_vendor_price_history"
+                        type="object"
+                        class="oe_stat_button"
+                        icon="fa-history"
+                        invisible="vendor_price_history_count == 0">
+                    <field name="vendor_price_history_count" widget="statinfo" string="Price Changes"/>
+                </button>
+                <button name="action_view_vendor_price_comparison"
+                        type="object"
+                        class="oe_stat_button"
+                        icon="fa-balance-scale"
+                        groups="purchase.group_purchase_user"
+                        invisible="not seller_ids">
+                    <div class="o_stat_info">
+                        <span class="o_stat_text">Compare</span>
+                        <span class="o_stat_text">Vendors</span>
+                    </div>
+                </button>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Inline history tab on product form -->
+    <record id="view_product_template_vendor_price_tab" model="ir.ui.view">
+        <field name="name">product.template.vendor.price.tab</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_only_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="Vendor Price History" invisible="vendor_price_history_count == 0">
+                    <field name="vendor_price_history_ids" nolabel="1">
+                        <list string="Vendor Price History" create="0" edit="0" delete="0" decoration-danger="price_difference &lt; 0" decoration-success="price_difference &gt; 0">
+                            <field name="currency_id" column_invisible="1"/>
+                            <field name="create_date" string="Date"/>
+                            <field name="partner_id" string="Vendor"/>
+                            <field name="user_id" string="User"/>
+                            <field name="old_price" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                            <field name="new_price" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                            <field name="price_difference" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                            <field name="price_difference_percent" string="Diff (%)"/>
+                            <field name="change_source" string="Source"/>
+                            <field name="reason" string="Reason" optional="show"/>
+                        </list>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Last Purchased Price comparison on the product form -->
+    <record id="view_product_template_last_purchase_price" model="ir.ui.view">
+        <field name="name">product.template.last.purchase.price</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_only_form_view"/>
+        <field name="arch" type="xml">
+            <field name="list_price" position="after">
+                <label for="last_purchase_price" string="Last Purchased Price"
+                       invisible="last_purchase_price == 0"/>
+                <div class="o_row" invisible="last_purchase_price == 0">
+                    <field name="last_purchase_price" widget="monetary" options="{'currency_field': 'currency_id'}" readonly="1"/>
+                    <span> from </span>
+                    <field name="last_purchase_vendor_id" readonly="1" nolabel="1"/>
+                </div>
+            </field>
+        </field>
+    </record>
+
+    <!-- Reason field inline on the vendor pricelist table - after price -->
+    <record id="view_product_template_supplierinfo_reason" model="ir.ui.view">
+        <field name="name">product.supplierinfo.tree.view2.reason</field>
+        <field name="model">product.supplierinfo</field>
+        <field name="inherit_id" ref="purchase.product_supplierinfo_tree_view2"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='price']" position="after">
+                <field name="change_reason" optional="show" string="Reason"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
