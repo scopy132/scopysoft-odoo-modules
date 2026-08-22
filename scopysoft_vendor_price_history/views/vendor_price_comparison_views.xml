@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Vendor Price Comparison: side-by-side view of every vendor for a
+         product, sorted cheapest-first, so "who is cheapest and by how much"
+         is answered in one glance instead of scanning rows. -->
+    <record id="view_vendor_price_comparison_tree" model="ir.ui.view">
+        <field name="name">product.supplierinfo.price.comparison.tree</field>
+        <field name="model">product.supplierinfo</field>
+        <field name="arch" type="xml">
+            <tree string="Vendor Price Comparison"
+                  create="0" delete="0" edit="0"
+                  default_order="product_tmpl_id, price"
+                  decoration-success="is_cheapest_vendor == True"
+                  decoration-danger="price_diff_from_cheapest_percent &gt;= 20">
+                <field name="currency_id" column_invisible="1"/>
+                <field name="is_cheapest_vendor" column_invisible="1"/>
+                <field name="product_tmpl_id" string="Product"/>
+                <field name="partner_id" string="Vendor"/>
+                <field name="price" string="Current Price" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                <field name="price_diff_from_cheapest" string="Diff from Cheapest" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                <field name="price_diff_from_cheapest_percent" string="Diff (%)"/>
+                <field name="last_price_change_date" string="Last Changed"/>
+                <field name="delay" string="Lead Time (days)" optional="show"/>
+                <field name="min_qty" string="Min. Qty" optional="show"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Search View -->
+    <record id="view_vendor_price_comparison_search" model="ir.ui.view">
+        <field name="name">product.supplierinfo.price.comparison.search</field>
+        <field name="model">product.supplierinfo</field>
+        <field name="arch" type="xml">
+            <search string="Vendor Price Comparison">
+                <field name="product_tmpl_id"/>
+                <field name="partner_id" string="Vendor"/>
+                <filter string="Cheapest Vendor" name="cheapest" domain="[('is_cheapest_vendor', '=', True)]"/>
+                <filter string="Overpriced (20%+ above cheapest)" name="overpriced" domain="[('price_diff_from_cheapest_percent', '&gt;=', 20)]"/>
+                <group expand="1" string="Group By">
+                    <filter string="Product" name="group_product" context="{'group_by': 'product_tmpl_id'}"/>
+                    <filter string="Vendor" name="group_vendor" context="{'group_by': 'partner_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_vendor_price_comparison" model="ir.actions.act_window">
+        <field name="name">Vendor Price Comparison</field>
+        <field name="res_model">product.supplierinfo</field>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="view_vendor_price_comparison_tree"/>
+        <field name="search_view_id" ref="view_vendor_price_comparison_search"/>
+        <field name="context">{'search_default_group_product': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No vendor pricelist lines yet!
+            </p>
+            <p>
+                Add vendors and prices on a product's Purchase tab to compare
+                them here — cheapest vendor per product is highlighted.
+            </p>
+        </field>
+    </record>
+
+    <!-- Menu -->
+    <menuitem id="menu_vendor_price_comparison"
+              name="Vendor Price Comparison"
+              parent="purchase.menu_purchase_config"
+              action="action_vendor_price_comparison"
+              sequence="21"/>
+
+</odoo>
