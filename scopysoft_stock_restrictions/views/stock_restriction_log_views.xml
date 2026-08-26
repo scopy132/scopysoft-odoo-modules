@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Tree View -->
+    <record id="view_stock_restriction_log_tree" model="ir.ui.view">
+        <field name="name">stock.restriction.log.tree</field>
+        <field name="model">stock.restriction.log</field>
+        <field name="arch" type="xml">
+            <tree string="Restriction Audit Log" create="false" edit="false" delete="false"
+                  decoration-warning="bypassed_by_admin == True">
+                <field name="create_date" string="Date &amp; Time"/>
+                <field name="user_id" string="User"/>
+                <field name="restriction" string="Restriction"/>
+                <field name="picking_name" string="Operation"/>
+                <field name="details" string="Details"/>
+                <field name="bypassed_by_admin" string="Admin Bypass"
+                       widget="boolean"/>
+                <field name="company_id" groups="base.group_multi_company" optional="show"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_stock_restriction_log_form" model="ir.ui.view">
+        <field name="name">stock.restriction.log.form</field>
+        <field name="model">stock.restriction.log</field>
+        <field name="arch" type="xml">
+            <form string="Restriction Log Entry" create="false" edit="false" delete="false">
+                <sheet>
+                    <group>
+                        <group string="Event">
+                            <field name="create_date" string="Date &amp; Time"/>
+                            <field name="restriction"/>
+                            <field name="bypassed_by_admin"/>
+                        </group>
+                        <group string="Context">
+                            <field name="user_id"/>
+                            <field name="picking_id"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                    </group>
+                    <group string="Details">
+                        <field name="details" nolabel="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Search View -->
+    <record id="view_stock_restriction_log_search" model="ir.ui.view">
+        <field name="name">stock.restriction.log.search</field>
+        <field name="model">stock.restriction.log</field>
+        <field name="arch" type="xml">
+            <search string="Restriction Audit Log">
+                <field name="restriction"/>
+                <field name="user_id"/>
+                <field name="picking_id"/>
+                <filter string="Admin Bypasses" name="admin_bypass"
+                        domain="[('bypassed_by_admin', '=', True)]"/>
+                <filter string="Blocked Attempts" name="blocked"
+                        domain="[('bypassed_by_admin', '=', False)]"/>
+                <separator/>
+                <filter string="Today" name="today"
+                        domain="[('create_date', '&gt;=', context_today().strftime('%Y-%m-%d'))]"/>
+                <filter string="This Week" name="this_week"
+                        domain="[('create_date', '&gt;=', (context_today() - relativedelta(weeks=1)).strftime('%Y-%m-%d'))]"/>
+                <filter string="This Month" name="this_month"
+                        domain="[('create_date', '&gt;=', (context_today() - relativedelta(months=1)).strftime('%Y-%m-%d'))]"/>
+                <group expand="1" string="Group By">
+                    <filter string="Restriction" name="group_restriction"
+                            context="{'group_by': 'restriction'}"/>
+                    <filter string="User" name="group_user"
+                            context="{'group_by': 'user_id'}"/>
+                    <filter string="Date" name="group_date"
+                            context="{'group_by': 'create_date:day'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_stock_restriction_log" model="ir.actions.act_window">
+        <field name="name">Restriction Audit Log</field>
+        <field name="res_model">stock.restriction.log</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_stock_restriction_log_search"/>
+        <field name="context">{'search_default_blocked': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No restriction events recorded yet
+            </p>
+            <p>
+                Enable "Restriction Audit Log" in Inventory → Configuration → Settings
+                to start logging blocked attempts and admin bypasses.
+            </p>
+        </field>
+    </record>
+
+    <!-- Menu under Inventory > Configuration -->
+    <menuitem id="menu_stock_restriction_log"
+              name="Restriction Audit Log"
+              parent="stock.menu_stock_config_settings"
+              action="action_stock_restriction_log"
+              groups="stock.group_stock_manager"
+              sequence="99"/>
+
+</odoo>
