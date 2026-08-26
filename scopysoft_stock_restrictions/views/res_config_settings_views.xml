@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="res_config_settings_view_stock_restrictions" model="ir.ui.view">
+        <field name="name">res.config.settings.view.stock.restrictions</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="stock.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="inside">
+
+                <app data-string="Stock Restrictions" string="Stock Restrictions"
+                     name="scopysoft_stock_restrictions">
+
+                    <block title="Receipts &amp; Deliveries" name="sr_receipts_deliveries">
+                        <setting string="Block manual receipts without a Purchase Order"
+                                 help="Receipts must always come from a Purchase Order. Manual creation is blocked.">
+                            <field name="sr_block_manual_receipt"/>
+                        </setting>
+                        <setting string="Block manual deliveries without a Sales Order"
+                                 help="Deliveries must always come from a Sales Order. Manual creation is blocked.">
+                            <field name="sr_block_manual_delivery"/>
+                        </setting>
+                    </block>
+
+                    <block title="Quantity Controls" name="sr_quantity_controls">
+                        <setting string="Block over-validation of quantities"
+                                 help="Cannot validate more than the demanded quantity (subject to tolerance below).">
+                            <field name="sr_block_over_validation"/>
+                        </setting>
+                        <setting string="Block under-validation of quantities"
+                                 help="Cannot validate less than the demanded quantity (subject to tolerance below).">
+                            <field name="sr_block_under_validation"/>
+                        </setting>
+                        <setting id="sr_validation_tolerance_setting" string="Quantity Tolerance (%)"
+                                 help="Allow this % over or under the demanded quantity. Set to 0 for strict enforcement.">
+                            <field name="sr_validation_tolerance"/>
+                        </setting>
+                        <setting string="Block zero-quantity validation"
+                                 help="Cannot validate a stock operation where done quantity is 0.">
+                            <field name="sr_block_zero_qty"/>
+                        </setting>
+                    </block>
+
+                    <block title="Stock Controls" name="sr_stock_controls">
+                        <setting string="Block negative stock on deliveries"
+                                 help="Deliveries that would push stock below zero are blocked.">
+                            <field name="sr_block_negative_stock"/>
+                        </setting>
+                        <setting string="Block backdating stock operations"
+                                 help="Scheduled dates cannot be set to a date in the past.">
+                            <field name="sr_block_backdate"/>
+                        </setting>
+                    </block>
+
+                    <block title="User Controls" name="sr_user_controls">
+                        <setting string="Only Inventory Managers can validate operations"
+                                 help="Only Inventory Managers and Administrators can validate stock operations.">
+                            <field name="sr_managers_only_validate"/>
+                        </setting>
+                        <setting string="Only Inventory Managers can cancel others' operations"
+                                 help="Users can still cancel operations they created themselves. Managers and Admins can cancel any in-progress operation.">
+                            <field name="sr_managers_only_cancel"/>
+                        </setting>
+                        <setting string="Only Inventory Managers can delete draft operations"
+                                 help="Only Inventory Managers and Administrators can delete draft operations.">
+                            <field name="sr_managers_only_delete"/>
+                        </setting>
+                    </block>
+
+                    <block title="Vendor Controls" name="sr_vendor_controls">
+                        <setting string="Block receiving from unregistered vendors"
+                                 help="Receipts from vendors not on the product's approved vendor list are blocked.">
+                            <field name="sr_block_unregistered_vendor"/>
+                        </setting>
+                    </block>
+
+                    <block title="Audit &amp; Notifications" name="sr_audit">
+                        <setting string="Enable restriction audit log"
+                                 help="All blocked attempts and admin bypasses are saved to the Restriction Audit Log. View it under Inventory to Configuration to Restriction Audit Log.">
+                            <field name="sr_enable_audit_log"/>
+                        </setting>
+                    </block>
+
+                </app>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
