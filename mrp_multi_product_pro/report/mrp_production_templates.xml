@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="report_mrporder_multi_product" inherit_id="mrp.report_mrporder">
+        <!--
+            After the main product row, add one identical-style row per additional product.
+            Each row mirrors the original: Product / Qty to Produce / Qty Producing (if any).
+        -->
+        <xpath expr="//span[@t-field='o.product_qty']/ancestor::div[contains(@class,'row')][1]" position="after">
+            <t t-foreach="o.multi_product_line_ids" t-as="aline">
+                <div class="row mt32 mb32">
+                    <div class="col-3">
+                        <span t-field="aline.product_id"/>
+                    </div>
+                    <div class="col-3" t-if="o.product_description_variants">
+                        <span></span>
+                    </div>
+                    <div class="col-3">
+                        <span t-field="aline.product_qty"/>
+                        <span t-field="aline.product_uom_id" groups="uom.group_uom"/>
+                    </div>
+                    <div class="col-3" t-if="aline.qty_done">
+                        <span t-field="aline.qty_done"/>
+                        <span t-field="aline.product_uom_id" groups="uom.group_uom"/>
+                    </div>
+                </div>
+            </t>
+        </xpath>
+    </template>
+
+    <template id="report_mrporder_cost_breakdown" inherit_id="mrp.report_mrporder">
+        <!--
+            Real per-product cost breakdown, pulled from actual stock
+            valuation layers (matches the Stock Valuation smart button
+            exactly) instead of Odoo's native $0 by-product placeholder.
+        -->
+        <xpath expr="//div[hasclass('page')]" position="inside">
+            <t t-set="cost_rows" t-value="o._get_multi_product_cost_breakdown()"/>
+            <div class="mt32" t-if="len(cost_rows) > 1">
+                <h3>Cost Breakdown of Products</h3>
+                <table class="table table-sm">
+                    <thead>
+                        <tr>
+                            <th>Product</th>
+                            <th class="text-end">Quantity</th>
+                            <th class="text-end">Unit Cost</th>
+                            <th class="text-end">Total Cost</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="cost_rows" t-as="row">
+                            <td><span t-esc="row['product'].display_name"/></td>
+                            <td class="text-end"><span t-esc="'%.2f' % row['qty']"/></td>
+                            <td class="text-end">
+                                <span t-esc="row['unit_cost']"
+                                      t-options="{'widget': 'monetary', 'display_currency': o.company_id.currency_id}"/>
+                            </td>
+                            <td class="text-end">
+                                <span t-esc="row['total_cost']"
+                                      t-options="{'widget': 'monetary', 'display_currency': o.company_id.currency_id}"/>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </xpath>
+    </template>
+
+</odoo>
