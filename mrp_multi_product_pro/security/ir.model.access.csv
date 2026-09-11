@@ -1,6 +1,0 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-mrp_production_product_line_user,mrp.production.product.line user,model_mrp_production_product_line,mrp.group_mrp_user,1,1,1,1
-mrp_production_product_line_manager,mrp.production.product.line manager,model_mrp_production_product_line,mrp.group_mrp_manager,1,1,1,1
-mrp_production_add_products_wizard_user,mrp.production.add.products.wizard user,model_mrp_production_add_products_wizard,mrp.group_mrp_user,1,1,1,1
-mrp_production_add_products_wizard_line_user,mrp.production.add.products.wizard.line user,model_mrp_production_add_products_wizard_line,mrp.group_mrp_user,1,1,1,1
-mrp_production_pull_so_wizard_user,mrp.production.pull.so.wizard user,model_mrp_production_pull_so_wizard,mrp.group_mrp_user,1,1,1,1
