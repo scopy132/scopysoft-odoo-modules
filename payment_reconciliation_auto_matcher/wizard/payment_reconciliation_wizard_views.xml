@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_account_payment_reconciliation_wizard" model="ir.ui.view">
+        <field name="name">account.payment.reconciliation.wizard.form</field>
+        <field name="model">account.payment.reconciliation.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Payment Reconciliation Auto-Matcher">
+                <field name="anchor_mode" invisible="1"/>
+                <group>
+                    <group string="Optional Filters (ignored if you launched this from a selection)">
+                        <field name="journal_id" options="{'no_create': True}" invisible="anchor_mode == 'invoice'"/>
+                        <field name="partner_id" options="{'no_create': True}"/>
+                    </group>
+                    <group string=" ">
+                        <field name="date_from"/>
+                        <field name="date_to"/>
+                    </group>
+                </group>
+                <field name="scope_invoice_ids" invisible="1"/>
+                <field name="scope_payment_ids" invisible="1"/>
+                <div class="alert alert-info" role="alert" invisible="not result_message">
+                    <field name="result_message" nolabel="1" readonly="1"/>
+                </div>
+                <p class="text-muted" invisible="match_line_ids or scope_invoice_ids or scope_payment_ids">
+                    Leave Journal, Partner, and the date range blank and click "Find Matches" to scan
+                    every unreconciled payment and open invoice/bill company-wide, or set any of those
+                    fields first to narrow the scan down.
+                </p>
+                <p class="text-muted" invisible="match_line_ids or (not scope_invoice_ids and not scope_payment_ids)">
+                    Click "Find Matches" to scan, or add a row yourself below for a pairing the tool can't find automatically.
+                </p>
+                <p class="text-muted" invisible="not match_line_ids or anchor_mode != 'payment'">
+                    <b>Payment</b> is fixed here — it's money that already moved. If a row needs fixing,
+                    change the <b>Invoice/Bill</b> instead; its dropdown only lists invoices close to that payment's amount.
+                </p>
+                <p class="text-muted" invisible="not match_line_ids or anchor_mode != 'invoice'">
+                    <b>Invoice/Bill</b> is fixed here — you selected it because it's unpaid. If a row needs fixing,
+                    change the <b>Payment</b> instead; its dropdown only lists payments close to this invoice's due amount.
+                </p>
+                <field name="match_line_ids" nolabel="1">
+                    <list create="true" delete="true" editable="bottom">
+                        <field name="wizard_id" column_invisible="True"/>
+                        <field name="anchor_mode" column_invisible="True"/>
+                        <field name="candidate_invoice_ids" column_invisible="True"/>
+                        <field name="candidate_payment_ids" column_invisible="True"/>
+                        <field name="partner_name" readonly="1"/>
+                        <field name="payment_id" string="Payment"
+                               readonly="anchor_mode == 'payment' and confidence != 'manual'"/>
+                        <field name="invoice_id" string="Invoice/Bill"
+                               readonly="anchor_mode == 'invoice' and confidence != 'manual'"/>
+                        <field name="payment_amount" readonly="anchor_mode == 'payment'"/>
+                        <field name="invoice_residual" readonly="anchor_mode == 'invoice'"/>
+                        <field name="confidence" widget="badge" readonly="1"
+                               decoration-success="confidence == 'exact_ref'"
+                               decoration-warning="confidence in ('exact_amount','manual')"
+                               decoration-danger="confidence in ('reference_only','multiple_matches','no_close_match','no_open_invoice','claimed_elsewhere')"/>
+                        <field name="to_reconcile"/>
+                        <field name="currency_id" column_invisible="True"/>
+                    </list>
+                </field>
+                <footer>
+                    <button string="Find Matches" name="action_find_matches" type="object" class="btn-secondary"/>
+                    <button string="Reconcile Confirmed" name="action_reconcile_confirmed" type="object" class="btn-primary"/>
+                    <button string="Close" class="btn-default" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!-- Entry point 1: standalone menu, defaults to payment-first, scans everything (or filtered) -->
+    <record id="action_account_payment_reconciliation_wizard" model="ir.actions.act_window">
+        <field name="name">Auto-Match Payments</field>
+        <field name="res_model">account.payment.reconciliation.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_account_payment_reconciliation_wizard"/>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem id="menu_account_payment_reconciliation_wizard"
+              name="Auto-Match Payments"
+              parent="account.menu_finance_entries"
+              action="action_account_payment_reconciliation_wizard"
+              sequence="15"/>
+
+    <!-- Entry point 2: select invoices/bills first — invoice-first mode.
+         A server action so we can create a REAL saved wizard record and run the
+         normal action_find_matches() on it, instead of pre-computing rows on an
+         in-memory default — that in-memory approach caused rows to lose their data. -->
+    <record id="action_server_auto_match_from_moves" model="ir.actions.server">
+        <field name="name">Auto-Match Payments</field>
+        <field name="model_id" ref="account.model_account_move"/>
+        <field name="binding_model_id" ref="account.model_account_move"/>
+        <field name="binding_view_types">list</field>
+        <field name="state">code</field>
+        <field name="code">
+wizard = env['account.payment.reconciliation.wizard'].with_context(
+    active_model='account.move', active_ids=records.ids
+).create({})
+wizard.action_find_matches()
+action = {
+    'type': 'ir.actions.act_window',
+    'res_model': 'account.payment.reconciliation.wizard',
+    'res_id': wizard.id,
+    'view_mode': 'form',
+    'target': 'new',
+}
+        </field>
+    </record>
+
+    <!-- Entry point 3: select payments first — payment-first mode. Same reasoning as above. -->
+    <record id="action_server_auto_match_from_payments" model="ir.actions.server">
+        <field name="name">Auto-Match Payments</field>
+        <field name="model_id" ref="account.model_account_payment"/>
+        <field name="binding_model_id" ref="account.model_account_payment"/>
+        <field name="binding_view_types">list</field>
+        <field name="state">code</field>
+        <field name="code">
+wizard = env['account.payment.reconciliation.wizard'].with_context(
+    active_model='account.payment', active_ids=records.ids
+).create({})
+wizard.action_find_matches()
+action = {
+    'type': 'ir.actions.act_window',
+    'res_model': 'account.payment.reconciliation.wizard',
+    'res_id': wizard.id,
+    'view_mode': 'form',
+    'target': 'new',
+}
+        </field>
+    </record>
+
+</odoo>
