@@ -1,0 +1,8 @@
+id,name,model_id,group_id/id,operation,domain
+access_account_payment_reconciliation_wizard,account.payment.reconciliation.wizard,account.payment.reconciliation.wizard,account.group_account_invoice,crud,
+access_account_payment_reconciliation_wizard_line,account.payment.reconciliation.wizard.line,account.payment.reconciliation.wizard.line,account.group_account_invoice,crud,
+access_payment_recon_log_invoice,payment.recon.log invoice,payment.recon.log,account.group_account_invoice,crud,
+access_payment_recon_rule_invoice,payment.recon.rule invoice,payment.recon.rule,account.group_account_invoice,r,
+access_payment_recon_rule_manager,payment.recon.rule manager,payment.recon.rule,account.group_account_manager,crud,
+access_payment_recon_config_invoice,payment.recon.config invoice,payment.recon.config,account.group_account_invoice,r,
+access_payment_recon_config_manager,payment.recon.config manager,payment.recon.config,account.group_account_manager,crud,
