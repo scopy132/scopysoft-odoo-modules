@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ===== Reconciliation log (audit trail + undo + dashboard) ===== -->
+    <record id="view_payment_recon_log_list" model="ir.ui.view">
+        <field name="name">payment.recon.log.list</field>
+        <field name="model">payment.recon.log</field>
+        <field name="arch" type="xml">
+            <list string="Reconciliation Log" create="false" delete="false" decoration-muted="state == 'undone'">
+                <field name="date"/>
+                <field name="partner_id"/>
+                <field name="invoice_id"/>
+                <field name="payment_names"/>
+                <field name="amount"/>
+                <field name="adjustment_amount" optional="show"/>
+                <field name="confidence" widget="badge" optional="show"/>
+                <field name="explanation" optional="show"/>
+                <field name="source" optional="hide"/>
+                <field name="user_id" optional="hide"/>
+                <field name="state" widget="badge" decoration-success="state == 'done'" decoration-muted="state == 'undone'"/>
+                <field name="currency_id" column_invisible="True"/>
+                <button name="action_undo" type="object" string="Undo" invisible="state != 'done'"
+                        confirm="Undo this reconciliation? The invoice and the payments become open again."/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_payment_recon_log_form" model="ir.ui.view">
+        <field name="name">payment.recon.log.form</field>
+        <field name="model">payment.recon.log</field>
+        <field name="arch" type="xml">
+            <form string="Reconciliation" create="false" delete="false">
+                <header>
+                    <button name="action_undo" type="object" string="Undo Reconciliation" class="btn-primary"
+                            invisible="state != 'done'"
+                            confirm="Undo this reconciliation? The invoice and the payments become open again."/>
+                    <field name="state" widget="statusbar" statusbar_visible="done,undone"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="date"/>
+                            <field name="user_id"/>
+                            <field name="source"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                            <field name="currency_id" invisible="1"/>
+                        </group>
+                        <group>
+                            <field name="partner_id"/>
+                            <field name="invoice_id"/>
+                            <field name="payment_ids" widget="many2many_tags"/>
+                            <field name="amount"/>
+                        </group>
+                    </group>
+                    <group string="Why it matched">
+                        <field name="confidence"/>
+                        <field name="explanation"/>
+                        <field name="breakdown"/>
+                    </group>
+                    <group string="Adjustment" invisible="not adjustment_move_id">
+                        <field name="rule_id"/>
+                        <field name="adjustment_amount"/>
+                        <field name="adjustment_move_id"/>
+                    </group>
+                    <group string="Undone" invisible="state != 'undone'">
+                        <field name="undone_date"/>
+                        <field name="undone_by"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_payment_recon_log_search" model="ir.ui.view">
+        <field name="name">payment.recon.log.search</field>
+        <field name="model">payment.recon.log</field>
+        <field name="arch" type="xml">
+            <search string="Reconciliation Log">
+                <field name="partner_id"/>
+                <field name="invoice_id"/>
+                <field name="payment_ids"/>
+                <filter string="Reconciled" name="done" domain="[('state', '=', 'done')]"/>
+                <filter string="Undone" name="undone" domain="[('state', '=', 'undone')]"/>
+                <separator/>
+                <filter string="Nightly Run" name="auto" domain="[('source', '=', 'auto')]"/>
+                <filter string="With Adjustment" name="adjusted" domain="[('adjustment_move_id', '!=', False)]"/>
+                <separator/>
+                <filter string="Date" name="date" date="date"/>
+                <group>
+                    <filter string="Match Type" name="group_confidence" domain="[]" context="{'group_by': 'confidence'}"/>
+                    <filter string="Source" name="group_source" domain="[]" context="{'group_by': 'source'}"/>
+                    <filter string="Partner" name="group_partner" domain="[]" context="{'group_by': 'partner_id'}"/>
+                    <filter string="User" name="group_user" domain="[]" context="{'group_by': 'user_id'}"/>
+                    <filter string="Month" name="group_month" domain="[]" context="{'group_by': 'date:month'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="view_payment_recon_log_pivot" model="ir.ui.view">
+        <field name="name">payment.recon.log.pivot</field>
+        <field name="model">payment.recon.log</field>
+        <field name="arch" type="xml">
+            <pivot string="Reconciliation Log">
+                <field name="confidence" type="row"/>
+                <field name="date" interval="month" type="col"/>
+                <field name="amount" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="view_payment_recon_log_graph" model="ir.ui.view">
+        <field name="name">payment.recon.log.graph</field>
+        <field name="model">payment.recon.log</field>
+        <field name="arch" type="xml">
+            <graph string="Reconciled Amount" type="bar">
+                <field name="date" interval="month"/>
+                <field name="amount" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="action_payment_recon_log" model="ir.actions.act_window">
+        <field name="name">Reconciliation Log</field>
+        <field name="res_model">payment.recon.log</field>
+        <field name="view_mode">list,form,pivot,graph</field>
+        <field name="domain">[('company_id', 'in', allowed_company_ids)]</field>
+        <field name="context">{'search_default_done': 1}</field>
+    </record>
+
+    <record id="action_payment_recon_dashboard" model="ir.actions.act_window">
+        <field name="name">Smart Reconcile Dashboard</field>
+        <field name="res_model">payment.recon.log</field>
+        <field name="view_mode">graph,pivot,list,form</field>
+        <field name="domain">[('company_id', 'in', allowed_company_ids), ('state', '=', 'done')]</field>
+    </record>
+
+    <!-- ===== Adjustment rules ===== -->
+    <record id="view_payment_recon_rule_list" model="ir.ui.view">
+        <field name="name">payment.recon.rule.list</field>
+        <field name="model">payment.recon.rule</field>
+        <field name="arch" type="xml">
+            <list string="Adjustment Rules">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="rule_type"/>
+                <field name="applies_to"/>
+                <field name="amount_type"/>
+                <field name="value"/>
+                <field name="account_id"/>
+                <field name="auto_tick"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_payment_recon_rule_form" model="ir.ui.view">
+        <field name="name">payment.recon.rule.form</field>
+        <field name="model">payment.recon.rule</field>
+        <field name="arch" type="xml">
+            <form string="Adjustment Rule">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="rule_type"/>
+                            <field name="applies_to"/>
+                            <field name="amount_type" invisible="rule_type == 'wht'"/>
+                            <field name="value"/>
+                            <field name="max_amount" invisible="rule_type == 'wht'"/>
+                            <field name="wht_base" invisible="rule_type != 'wht'"/>
+                        </group>
+                        <group>
+                            <field name="account_id" options="{'no_create': True}"/>
+                            <field name="journal_id" options="{'no_create': True}"/>
+                            <field name="auto_tick"/>
+                            <field name="sequence"/>
+                            <field name="active"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                    </group>
+                    <group string="Only these partners (optional)">
+                        <field name="partner_ids" widget="many2many_tags" nolabel="1"/>
+                    </group>
+                    <div class="text-muted">
+                        A rule only ever explains a payment that is SHORT of the invoice by exactly the amount the rule
+                        calculates (tolerance rules also need the invoice reference in the memo). The difference is booked
+                        to the adjustment account with a journal entry, and the invoice is then settled in full.
+                        Every adjustment can be undone from the Reconciliation Log.
+                    </div>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_payment_recon_rule" model="ir.actions.act_window">
+        <field name="name">Adjustment Rules</field>
+        <field name="res_model">payment.recon.rule</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('company_id', 'in', allowed_company_ids)]</field>
+    </record>
+
+    <!-- ===== Settings (one record per company) ===== -->
+    <record id="view_payment_recon_config_form" model="ir.ui.view">
+        <field name="name">payment.recon.config.form</field>
+        <field name="model">payment.recon.config</field>
+        <field name="arch" type="xml">
+            <form string="Smart Reconcile Settings" create="false" delete="false">
+                <header>
+                    <button name="action_run_now" type="object" string="Run Nightly Job Now" class="btn-primary"
+                            confirm="Reconcile all high-confidence matches now (same as the nightly run)?"/>
+                </header>
+                <sheet>
+                    <group string="Matching">
+                        <field name="company_id" groups="base.group_multi_company" readonly="1"/>
+                        <field name="combo_enabled"/>
+                        <field name="combo_window_days" invisible="not combo_enabled"/>
+                    </group>
+                    <group string="Nightly auto-run (off by default)">
+                        <field name="auto_run"/>
+                        <field name="auto_include_amount" invisible="not auto_run"/>
+                        <field name="notify_user_ids" widget="many2many_tags" invisible="not auto_run"/>
+                        <field name="last_run" invisible="not last_run"/>
+                        <field name="last_summary" invisible="not last_summary"/>
+                    </group>
+                    <div class="text-muted">
+                        The nightly run only reconciles matches that are 1-to-1 and have the amount AND the invoice
+                        reference. Split, combination and adjustment matches always wait for a person.
+                    </div>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_payment_recon_config_open" model="ir.actions.server">
+        <field name="name">Smart Reconcile Settings</field>
+        <field name="model_id" ref="model_payment_recon_config"/>
+        <field name="state">code</field>
+        <field name="code">action = model._action_open()</field>
+    </record>
+
+    <!-- ===== Menus ===== -->
+    <menuitem id="menu_smart_reconcile" name="Smart Reconcile" parent="account.menu_finance" sequence="48"/>
+    <menuitem id="menu_smart_reconcile_wizard" name="Auto-Match Payments" parent="menu_smart_reconcile"
+              action="action_account_payment_reconciliation_wizard" sequence="10"/>
+    <menuitem id="menu_smart_reconcile_log" name="Reconciliation Log" parent="menu_smart_reconcile"
+              action="action_payment_recon_log" sequence="20"/>
+    <menuitem id="menu_smart_reconcile_dashboard" name="Dashboard" parent="menu_smart_reconcile"
+              action="action_payment_recon_dashboard" sequence="30"/>
+    <menuitem id="menu_smart_reconcile_rules" name="Adjustment Rules" parent="menu_smart_reconcile"
+              action="action_payment_recon_rule" sequence="40"/>
+    <menuitem id="menu_smart_reconcile_config" name="Settings" parent="menu_smart_reconcile"
+              action="action_payment_recon_config_open" sequence="50"/>
+
+    <!-- Undo from the list's Actions menu -->
+    <record id="action_server_recon_log_undo" model="ir.actions.server">
+        <field name="name">Undo Reconciliation</field>
+        <field name="model_id" ref="model_payment_recon_log"/>
+        <field name="binding_model_id" ref="model_payment_recon_log"/>
+        <field name="binding_view_types">list</field>
+        <field name="state">code</field>
+        <field name="code">records.filtered(lambda r: r.state == 'done').action_undo()</field>
+    </record>
+
+</odoo>
