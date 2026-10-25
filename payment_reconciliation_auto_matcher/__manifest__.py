@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'Smart Reconcile - Payment & Invoice Auto-Matcher',
-    'version': '19.0.2.0.6',
+    'version': '19.0.2.0.7',
     'category': 'Accounting',
     'sequence': 1,
     'author': 'ScopySoft',
@@ -40,6 +40,10 @@ Stop reconciling payments to invoices one at a time.
         'static/description/step_confirm.png',
         'static/description/step_rules_list.png',
         'static/description/step_rule_form.png',
+        'static/description/step_log_list.png',
+        'static/description/step_log_form.png',
+        'static/description/step_dashboard.png',
+        'static/description/step_settings.png',
     ],
     'license': 'OPL-1',
     'currency': 'USD',
