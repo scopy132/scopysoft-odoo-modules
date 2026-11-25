@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_contract_radar_dashboard" model="ir.actions.client">
+        <field name="name">Radar</field>
+        <field name="tag">contract_radar.dashboard</field>
+    </record>
+</odoo>
