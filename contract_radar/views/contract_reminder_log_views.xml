@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="contract_reminder_log_view_list" model="ir.ui.view">
+        <field name="name">contract.radar.reminder.log.list</field>
+        <field name="model">contract.radar.reminder.log</field>
+        <field name="arch" type="xml">
+            <list string="Reminder Log" create="0" edit="0">
+                <field name="sent_on"/>
+                <field name="contract_id"/>
+                <field name="stage_days"/>
+                <field name="anchor_date"/>
+                <field name="notified"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_contract_reminder_log" model="ir.actions.act_window">
+        <field name="name">Reminder Log</field>
+        <field name="res_model">contract.radar.reminder.log</field>
+        <field name="view_mode">list</field>
+    </record>
+</odoo>
