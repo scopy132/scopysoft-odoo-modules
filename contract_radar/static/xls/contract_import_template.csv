@@ -1,4 +1,0 @@
-Contract Title,Type,Counterparty,Status,Start Date,End Date,Currency,Recurring Amount,Billing Period,Auto-Renew,Notice Period (days)
-Office lease - Ikeja,Lease,Landlord Properties Ltd,Active,2026-01-01,2026-12-31,NGN,6000000,Yearly,True,90
-Microsoft 365 licences,License,Microsoft,Active,2026-03-01,2027-02-28,NGN,450000,Monthly,True,30
-Annual security audit,Service,Example Security Ltd,Active,2026-06-15,2027-06-14,NGN,2500000,Yearly,False,60
