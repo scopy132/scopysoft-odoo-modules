@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- ============ Contract form ============ -->
+    <record id="contract_radar_view_form_bills" model="ir.ui.view">
+        <field name="name">contract.radar.form.bills</field>
+        <field name="model">contract.radar</field>
+        <field name="inherit_id" ref="contract_radar.contract_radar_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header/button[@name='action_cancel']" position="before">
+                <button name="action_match_bills" string="Check Bills" type="object"
+                        invisible="is_template or state in ('draft', 'cancelled') or flow != 'cost' or not check_bills"
+                        groups="contract_radar.group_contract_finance"/>
+            </xpath>
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="action_view_bill_issues" type="object" class="oe_stat_button" icon="fa-exclamation-triangle"
+                        invisible="is_template or not check_bills or bill_issue_count == 0">
+                    <field name="bill_issue_count" widget="statinfo" string="Bill Issues"/>
+                </button>
+            </xpath>
+            <xpath expr="//div[hasclass('oe_title')]" position="before">
+                <div class="alert alert-warning" role="alert" invisible="is_template or not check_bills or bill_issue_count == 0">
+                    <i class="fa fa-exclamation-triangle me-1"/>
+                    <b>Bill check:</b>
+                    <field name="bill_issue_count" readonly="1" class="mx-1"/> payment(s) were billed above the agreed amount
+                    or have no bill. Open the Projected Payments tab for details.
+                </div>
+            </xpath>
+            <xpath expr="//page[@name='details']/group" position="after">
+                <group string="Bill Matching" name="bill_matching" invisible="is_template or flow != 'cost'">
+                    <group>
+                        <field name="check_bills"/>
+                        <field name="bill_tolerance_percent" invisible="not check_bills"/>
+                        <field name="bill_basis" invisible="not check_bills"/>
+                    </group>
+                    <group>
+                        <field name="bill_overcharge" invisible="not check_bills or bill_overcharge == 0"/>
+                        <field name="bill_last_check" invisible="not check_bills or not bill_last_check"/>
+                    </group>
+                </group>
+            </xpath>
+            <xpath expr="//field[@name='cost_line_ids']/list/field[@name='amount_company']" position="after">
+                <field name="bill_state" widget="badge" optional="show"
+                       decoration-danger="bill_state in ('over', 'missing')"
+                       decoration-success="bill_state == 'ok'"
+                       decoration-info="bill_state in ('under', 'pending')"/>
+                <field name="billed_amount" optional="show"/>
+                <field name="bill_difference" optional="show"/>
+                <field name="bill_ids" widget="many2many_tags" optional="hide" groups="account.group_account_invoice"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- ============ Contract search ============ -->
+    <record id="contract_radar_view_search_bills" model="ir.ui.view">
+        <field name="name">contract.radar.search.bills</field>
+        <field name="model">contract.radar</field>
+        <field name="inherit_id" ref="contract_radar.contract_radar_view_search"/>
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='filter_auto_renew']" position="after">
+                <filter name="filter_bill_issues" string="Bill Issues" domain="[('bill_issue_count', '&gt;', 0)]"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- ============ Projected payments (forecast list and search) ============ -->
+    <record id="contract_cost_line_view_list_bills" model="ir.ui.view">
+        <field name="name">contract.radar.cost.line.list.bills</field>
+        <field name="model">contract.radar.cost.line</field>
+        <field name="inherit_id" ref="contract_radar.contract_cost_line_view_list"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='amount_company']" position="after">
+                <field name="bill_state" widget="badge" optional="show"
+                       decoration-danger="bill_state in ('over', 'missing')"
+                       decoration-success="bill_state == 'ok'"
+                       decoration-info="bill_state in ('under', 'pending')"/>
+                <field name="billed_amount" optional="show"/>
+                <field name="bill_difference" optional="show"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="contract_cost_line_view_search_bills" model="ir.ui.view">
+        <field name="name">contract.radar.cost.line.search.bills</field>
+        <field name="model">contract.radar.cost.line</field>
+        <field name="inherit_id" ref="contract_radar.contract_cost_line_view_search"/>
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='filter_next12']" position="after">
+                <filter name="filter_bill_issues" string="Bill Issues"
+                        domain="[('bill_state', 'in', ('over', 'missing'))]"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- ============ Projected payment form: Bill Check and matched bills placed above the Contract block so the popup shows them without scrolling ============ -->
+    <record id="contract_cost_line_view_form_bills" model="ir.ui.view">
+        <field name="name">contract.radar.cost.line.form.bills</field>
+        <field name="model">contract.radar.cost.line</field>
+        <field name="inherit_id" ref="contract_radar.contract_cost_line_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='contract_info']" position="before">
+                <group string="Bill Check" name="bill_check" invisible="bill_state == 'na'">
+                    <group>
+                        <field name="bill_state" widget="badge"
+                               decoration-danger="bill_state in ('over', 'missing')"
+                               decoration-success="bill_state == 'ok'"
+                               decoration-info="bill_state in ('under', 'pending')"/>
+                    </group>
+                    <group>
+                        <field name="billed_amount"/>
+                        <field name="bill_difference"/>
+                    </group>
+                </group>
+                <group string="Matched Bills" name="matched_bills" groups="account.group_account_invoice"
+                       invisible="not bill_ids">
+                    <field name="bill_ids" nolabel="1" colspan="2">
+                        <list>
+                            <field name="name" string="Number"/>
+                            <field name="invoice_date" string="Bill Date"/>
+                            <field name="invoice_date_due" string="Due Date"/>
+                            <field name="currency_id" column_invisible="True"/>
+                            <field name="amount_untaxed" string="Tax Excluded"/>
+                            <field name="amount_total" string="Total"/>
+                            <field name="payment_state" widget="badge" string="Status"
+                                   decoration-success="payment_state in ('paid', 'in_payment')"
+                                   decoration-warning="payment_state == 'partial'"/>
+                        </list>
+                    </field>
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>
